@@ -30,7 +30,8 @@
       "@utils": ["src/utils/index.ts"],
       "@models": ["src/domain/models/index.ts"],
       "@dtos": ["src/domain/dtos/index.ts"],
-      "@interfaces": ["src/domain/interfaces/index.ts"]
+      "@interfaces": ["src/domain/interfaces/index.ts"],
+      "@prisma-service": ["src/infra/database/prisma/prisma.service.ts"]
     }
   }
 }

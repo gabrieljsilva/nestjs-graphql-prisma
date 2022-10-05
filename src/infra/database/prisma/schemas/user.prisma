@@ -1,5 +1,0 @@
-model User {
-    @@map("users")
-
-    id      String @id @default(uuid())
-}

@@ -38,7 +38,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^8.0.1",
+    "eslint": "8.22.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "28.1.3",
@@ -66,6 +66,17 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@constants/(.*)$": "<rootDir>/../src/shared/constants/index.ts",
+      "^@decorators/(.*)$": "<rootDir>/../src/shared/decorators/index.ts",
+      "^@enums/(.*)$": "<rootDir>/../src/shared/enums/index.ts",
+      "^@exception-filters/(.*)$": "<rootDir>/../src/shared/exception-filters/index.ts",
+      "^@exceptions/(.*)$": "<rootDir>/../src/shared/exceptions/index.ts",
+      "^@guards/(.*)$": "<rootDir>/../src/shared/guards/index.ts",
+      "^@middlewares/(.*)$": "<rootDir>/../src/shared/middlewares/index.ts",
+      "^@types/(.*)$": "<rootDir>/../src/shared/types/index.ts",
+      "^@utils/(.*)$": "<rootDir>/../src/shared/utils/index.ts"
+    }
   }
 }

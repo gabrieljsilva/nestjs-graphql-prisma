@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - default
+
+  api_vi:
+    container_name: api_v1
+    image: 'node:16.16.0'
+    networks:
+      - default
+    ports:
+      - '3000:3000'
+    command: sh -c "yarn install && yarn start:dev"
+    working_dir: /source
+    volumes:
+      - ./:/source
+    env_file:
+      - .env
+
+networks:
+  default:
+
+volumes:
+  postgres:

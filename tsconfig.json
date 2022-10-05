@@ -27,7 +27,10 @@
       "@guards": ["src/guards/index.ts"],
       "@middlewares": ["src/middlewares/index.ts"],
       "@types": ["src/types/index.ts"],
-      "@utils": ["src/utils/index.ts"]
+      "@utils": ["src/utils/index.ts"],
+      "@models": ["src/domain/models/index.ts"],
+      "@dtos": ["src/domain/dtos/index.ts"],
+      "@interfaces": ["src/domain/interfaces/index.ts"]
     }
   }
 }

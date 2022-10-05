@@ -17,8 +17,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -68,15 +67,15 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@constants/(.*)$": "<rootDir>/../src/shared/constants/index.ts",
-      "^@decorators/(.*)$": "<rootDir>/../src/shared/decorators/index.ts",
-      "^@enums/(.*)$": "<rootDir>/../src/shared/enums/index.ts",
-      "^@exception-filters/(.*)$": "<rootDir>/../src/shared/exception-filters/index.ts",
-      "^@exceptions/(.*)$": "<rootDir>/../src/shared/exceptions/index.ts",
-      "^@guards/(.*)$": "<rootDir>/../src/shared/guards/index.ts",
-      "^@middlewares/(.*)$": "<rootDir>/../src/shared/middlewares/index.ts",
-      "^@types/(.*)$": "<rootDir>/../src/shared/types/index.ts",
-      "^@utils/(.*)$": "<rootDir>/../src/shared/utils/index.ts"
+      "^@constants/(.*)$": "<rootDir>/../src/constants/index.ts",
+      "^@decorators/(.*)$": "<rootDir>/../src/decorators/index.ts",
+      "^@enums/(.*)$": "<rootDir>/../src/enums/index.ts",
+      "^@exception-filters/(.*)$": "<rootDir>/../src/exception-filters/index.ts",
+      "^@exceptions/(.*)$": "<rootDir>/../src/exceptions/index.ts",
+      "^@guards/(.*)$": "<rootDir>/../src/guards/index.ts",
+      "^@middlewares/(.*)$": "<rootDir>/../src/middlewares/index.ts",
+      "^@types/(.*)$": "<rootDir>/../src/types/index.ts",
+      "^@utils/(.*)$": "<rootDir>/../src/utils/index.ts"
     }
   }
 }

@@ -19,15 +19,15 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": false,
     "paths": {
-      "@constants": ["src/shared/constants/index.ts"],
-      "@decorators": ["src/shared/decorators/index.ts"],
-      "@enums": ["src/shared/enums/index.ts"],
-      "@exception-filters": ["src/shared/exception-filters/index.ts"],
-      "@exceptions": ["src/shared/exceptions/index.ts"],
-      "@guards": ["src/shared/guards/index.ts"],
-      "@middlewares": ["src/shared/middlewares/index.ts"],
-      "@types": ["src/shared/types/index.ts"],
-      "@utils": ["src/shared/utils/index.ts"]
+      "@constants": ["src/constants/index.ts"],
+      "@decorators": ["src/decorators/index.ts"],
+      "@enums": ["src/enums/index.ts"],
+      "@exception-filters": ["src/exception-filters/index.ts"],
+      "@exceptions": ["src/exceptions/index.ts"],
+      "@guards": ["src/guards/index.ts"],
+      "@middlewares": ["src/middlewares/index.ts"],
+      "@types": ["src/types/index.ts"],
+      "@utils": ["src/utils/index.ts"]
     }
   }
 }

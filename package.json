@@ -83,7 +83,10 @@
       "^@types/(.*)$": "<rootDir>/../src/types/index.ts",
       "^@utils/(.*)$": "<rootDir>/../src/utils/index.ts",
       "^@models/(.*)$": "<rootDir>/../src/models/index.ts",
-      "^@prisma-service/(.*)$": "<rootDir>/../src/infra/database/prisma/prisma-service.ts"
+      "^@prisma/(.*)$": "<rootDir>/../src/infra/database/prisma/$1"
     }
+  },
+  "prisma": {
+    "schema": "src/infra/database/prisma/schema.prisma"
   }
 }

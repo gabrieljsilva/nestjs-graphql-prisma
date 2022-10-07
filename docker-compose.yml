@@ -7,15 +7,15 @@ services:
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres:/data/postgres
     networks:
       - default
 
-  api_vi:
+  api_v1:
     container_name: api_v1
     image: 'node:16.16.0'
     networks:
@@ -28,6 +28,8 @@ services:
       - ./:/source
     env_file:
       - .env
+    environment:
+      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_NAME}'
 
 networks:
   default:

@@ -19,19 +19,19 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": false,
     "paths": {
-      "@constants": ["src/constants/index.ts"],
-      "@decorators": ["src/decorators/index.ts"],
-      "@enums": ["src/enums/index.ts"],
-      "@exception-filters": ["src/exception-filters/index.ts"],
-      "@exceptions": ["src/exceptions/index.ts"],
-      "@guards": ["src/guards/index.ts"],
-      "@middlewares": ["src/middlewares/index.ts"],
-      "@types": ["src/types/index.ts"],
-      "@utils": ["src/utils/index.ts"],
-      "@models": ["src/domain/models/index.ts"],
-      "@dtos": ["src/domain/dtos/index.ts"],
-      "@interfaces": ["src/domain/interfaces/index.ts"],
-      "@prisma-service": ["src/infra/database/prisma/prisma.service.ts"]
+      "@constants": ["src/constants"],
+      "@decorators": ["src/decorators"],
+      "@enums": ["src/enums"],
+      "@exception-filters": ["src/exception-filters"],
+      "@exceptions": ["src/exceptions"],
+      "@guards": ["src/guards"],
+      "@middlewares": ["src/middlewares"],
+      "@types": ["src/types"],
+      "@utils": ["src/utils"],
+      "@models": ["src/domain/models"],
+      "@dtos": ["src/domain/dtos"],
+      "@interfaces": ["src/domain/interfaces"],
+      "@prisma/*": ["src/infra/database/prisma/*"]
     }
   }
 }

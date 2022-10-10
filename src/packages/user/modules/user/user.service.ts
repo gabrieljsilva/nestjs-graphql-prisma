@@ -50,6 +50,14 @@ export class UserService {
   }
 
   async updateUserById({ id, ...updateUserDto }: UpdateUserDto) {
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException(RESOURCE.USER, { id });
+    }
+
     return this.prismaService.user.update({
       where: { id },
       data: updateUserDto,

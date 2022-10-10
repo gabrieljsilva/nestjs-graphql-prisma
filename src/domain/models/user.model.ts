@@ -10,5 +10,5 @@ export class User {
   name: string;
 
   @Field()
-  credentials: Credentials;
+  credentials?: Credentials;
 }

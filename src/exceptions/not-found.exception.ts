@@ -6,7 +6,7 @@ export class NotFoundException extends BaseException {
   constructor(resource: RESOURCE, keys: Record<string, string | number>) {
     super(
       {
-        message: `${resource} NOT FOUND`,
+        message: `${resource} not found`,
         code: EXCEPTION_CODES.NOT_FOUND,
         keys: keys,
       },

@@ -12,9 +12,29 @@ type User {
   credentials: Credentials!
 }
 
+type PaginationMetadata {
+  currentPage: Float!
+  totalPages: Float!
+  totalItemsCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  nextPage: Float
+  previousPage: Float
+}
+
+type UserPaginated {
+  items: [User!]!
+  meta: PaginationMetadata!
+}
+
 type Query {
-  getManyUsers: [User!]!
+  getManyUsers(pagination: PaginationInput!): UserPaginated!
   getUserById(id: String!): User!
+}
+
+input PaginationInput {
+  take: Float!
+  skip: Float!
 }
 
 type Mutation {

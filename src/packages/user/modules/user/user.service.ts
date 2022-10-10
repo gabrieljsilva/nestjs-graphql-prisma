@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
-import { AlreadyExistsException, NotFoundException } from '@exceptions';
+import {
+  AlreadyExistsException,
+  NotFoundException,
+  OutOfRangeException,
+} from '@exceptions';
 import { RESOURCE } from '@enums';
 import { hashString } from '../../domain';
+import { Paginated, PaginationInput } from '../../../../utils/graphql';
+import { User } from '@models';
+import { calculatePaginationMetadata } from '../../../../utils/function';
+import { UserPaginated } from '../../../../domain/paginations';
 
 @Injectable()
 export class UserService {
@@ -39,8 +47,28 @@ export class UserService {
     });
   }
 
-  async getManyUsers() {
-    return this.prismaService.user.findMany();
+  async getManyUsers({ skip, take }: PaginationInput): Promise<UserPaginated> {
+    const totalItemsCount = await this.prismaService.user.count();
+
+    if (skip < 0 || take <= 0) {
+      throw new OutOfRangeException(take, skip, totalItemsCount);
+    }
+
+    const users = await this.prismaService.user.findMany({
+      take: take,
+      skip: skip,
+    });
+
+    const paginationMetadata = calculatePaginationMetadata({
+      skip,
+      take,
+      totalItemsCount,
+    });
+
+    return {
+      items: users,
+      meta: paginationMetadata,
+    };
   }
 
   async getCredentialsByUserId(id: string) {

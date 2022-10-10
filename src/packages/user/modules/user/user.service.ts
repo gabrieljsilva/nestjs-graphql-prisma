@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
-import { CreateUserDto } from '@dtos';
+import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { AlreadyExistsException } from '../../../../exceptions/already-exists.exception';
 import { RESOURCE } from '@enums';
 
@@ -44,6 +44,13 @@ export class UserService {
   async findCredentialsByUserId(id: string) {
     return this.prismaService.credentials.findFirst({
       where: { user_id: id },
+    });
+  }
+
+  async updateUserById({ id, ...updateUserDto }: UpdateUserDto) {
+    return this.prismaService.user.update({
+      where: { id },
+      data: updateUserDto,
     });
   }
 }

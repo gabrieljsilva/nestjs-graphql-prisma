@@ -8,7 +8,7 @@ import {
 } from '@nestjs/graphql';
 import { Credentials, User } from '@models';
 import { UserService } from './user.service';
-import { CreateUserDto } from '@dtos';
+import { CreateUserDto, UpdateUserDto } from '@dtos';
 
 @Resolver(User)
 export class UserResolver {
@@ -17,6 +17,11 @@ export class UserResolver {
   @Mutation(() => User)
   createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
+  }
+
+  @Mutation(() => User)
+  updateUserById(@Args('updateUserById') updateUserDto: UpdateUserDto) {
+    return this.userService.updateUserById(updateUserDto);
   }
 
   @Query(() => User)

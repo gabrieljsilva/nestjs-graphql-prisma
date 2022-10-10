@@ -24,6 +24,11 @@ export class UserResolver {
     return this.userService.updateUserById(updateUserDto);
   }
 
+  @Mutation(() => Boolean)
+  deleteUserById(@Args('id') id: string) {
+    return this.userService.deleteUserById(id);
+  }
+
   @Query(() => User)
   getUserById(@Args('id') id: string) {
     return this.userService.getUserById(id);

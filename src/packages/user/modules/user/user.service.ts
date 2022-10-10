@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
-import { AlreadyExistsException } from '../../../../exceptions/already-exists.exception';
+import { AlreadyExistsException, NotFoundException } from '@exceptions';
 import { RESOURCE } from '@enums';
 
 @Injectable()
@@ -29,9 +29,6 @@ export class UserService {
           },
         },
       },
-      include: {
-        credentials: true,
-      },
     });
   }
 
@@ -52,5 +49,23 @@ export class UserService {
       where: { id },
       data: updateUserDto,
     });
+  }
+
+  async deleteUserById(id: string) {
+    const user = await this.prismaService.user.findFirst({
+      where: { id },
+      select: { credentials: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException(RESOURCE.USER, { id });
+    }
+
+    await this.prismaService.user.delete({
+      where: { id },
+      include: { credentials: true },
+    });
+
+    return true;
   }
 }

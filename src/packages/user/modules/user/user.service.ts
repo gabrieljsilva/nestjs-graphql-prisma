@@ -3,6 +3,7 @@ import { PrismaService } from '@prisma/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { AlreadyExistsException, NotFoundException } from '@exceptions';
 import { RESOURCE } from '@enums';
+import { hashString } from '../../domain';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,7 @@ export class UserService {
         credentials: {
           create: {
             email: createUserDto.email,
-            password: createUserDto.password,
+            password: hashString(createUserDto.password),
           },
         },
       },

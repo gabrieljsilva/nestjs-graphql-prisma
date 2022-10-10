@@ -1,12 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateUserDto } from '@dtos';
+import { AlreadyExistsException } from '../../../../exceptions/already-exists.exception';
+import { RESOURCE } from '@enums';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async createUser(createUserDto: CreateUserDto) {
+    const user = await this.prismaService.user.findFirst({
+      where: { credentials: { email: createUserDto.email } },
+    });
+
+    if (user) {
+      throw new AlreadyExistsException(RESOURCE.USER, {
+        email: createUserDto.email,
+      });
+    }
+
     return this.prismaService.user.create({
       data: {
         name: createUserDto.name,

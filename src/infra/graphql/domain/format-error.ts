@@ -1,7 +1,6 @@
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { BaseException } from '../../../exceptions/base.exception';
 import { EXCEPTION_CODES } from '@enums';
-import { AlreadyExistsException } from '../../../exceptions/already-exists.exception';
 import { Exception } from '@interfaces';
 
 export function formatError(error: Required<GraphQLError>) {

@@ -13,6 +13,7 @@ type User {
 }
 
 type Query {
+  getManyUsers: [User!]!
   getUserById(id: String!): User!
 }
 

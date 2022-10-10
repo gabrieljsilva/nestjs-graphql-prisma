@@ -39,7 +39,11 @@ export class UserService {
     });
   }
 
-  async findCredentialsByUserId(id: string) {
+  async getManyUsers() {
+    return this.prismaService.user.findMany();
+  }
+
+  async getCredentialsByUserId(id: string) {
     return this.prismaService.credentials.findFirst({
       where: { user_id: id },
     });

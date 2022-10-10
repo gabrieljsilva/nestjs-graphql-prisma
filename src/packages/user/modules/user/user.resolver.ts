@@ -29,6 +29,11 @@ export class UserResolver {
     return this.userService.deleteUserById(id);
   }
 
+  @Query(() => [User])
+  getManyUsers() {
+    return this.userService.getManyUsers();
+  }
+
   @Query(() => User)
   getUserById(@Args('id') id: string) {
     return this.userService.getUserById(id);
@@ -36,6 +41,6 @@ export class UserResolver {
 
   @ResolveField(() => Credentials)
   credentials(@Parent() user: User) {
-    return this.userService.findCredentialsByUserId(user.id);
+    return this.userService.getCredentialsByUserId(user.id);
   }
 }

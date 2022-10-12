@@ -1,7 +1,10 @@
 import { FilterInterface } from '../../domain/interfaces/filter';
 
 export function parseFiltersToPrismaQuery(filters: FilterInterface<any>) {
+  // Throw error when EQUALS and LIKE has same fields
+
   let query = {};
+
   if (filters.EQUALS) {
     query = {
       ...query,

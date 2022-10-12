@@ -62,8 +62,6 @@ export class UserService {
 
     const parsedFilters = parseFiltersToPrismaQuery(filters);
 
-    console.log(parsedFilters);
-
     const users = await this.prismaService.user.findMany({
       take: take,
       skip: skip,

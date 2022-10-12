@@ -1,4 +1,4 @@
-export interface FilterInterface<T> {
+export interface FilterableInterface<T> {
   EQUALS: T;
   LIKE: T;
   NOT: T;

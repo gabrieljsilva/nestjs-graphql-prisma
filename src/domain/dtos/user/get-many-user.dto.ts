@@ -1,3 +1,3 @@
 // export class GetManyUserDto {
-//   filters:
+//   filterables:
 // }

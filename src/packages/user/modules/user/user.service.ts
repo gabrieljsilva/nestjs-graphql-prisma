@@ -11,10 +11,10 @@ import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
 import {
   calculatePaginationMetadata,
-  parseFiltersToPrismaQuery,
+  getPrismaQueryFromFilters,
 } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
-import { UserFilters } from '../../../../domain/filters';
+import { UserFilters } from '../../../../domain/filterables';
 
 @Injectable()
 export class UserService {
@@ -60,7 +60,7 @@ export class UserService {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
-    const parsedFilters = parseFiltersToPrismaQuery(filters);
+    const parsedFilters = getPrismaQueryFromFilters(filters);
 
     const users = await this.prismaService.user.findMany({
       take: take,

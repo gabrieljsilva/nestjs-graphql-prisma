@@ -1,3 +1,2 @@
 export * from './calculate-pagination-metadata';
-export * from './create-filter-of';
-export * from './parse-filters-to-prisma-query';
+export * from './get-prisma-query-from-filters';

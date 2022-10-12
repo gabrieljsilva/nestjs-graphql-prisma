@@ -11,7 +11,7 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { PaginationInput } from '../../../../utils/graphql';
 import { UserPaginated } from '../../../../domain/paginations';
-import { UserFilters } from '../../../../domain/filters';
+import { UserFilters } from '../../../../domain/filterables';
 
 @Resolver(User)
 export class UserResolver {

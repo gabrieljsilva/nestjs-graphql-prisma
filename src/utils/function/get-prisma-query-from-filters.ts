@@ -1,6 +1,6 @@
-import { FilterInterface } from '../../domain/interfaces/filter';
+import { FilterableInterface } from '../../domain/interfaces/filter';
 
-export function parseFiltersToPrismaQuery(filters: FilterInterface<any>) {
+export function getPrismaQueryFromFilters(filters: FilterableInterface<any>) {
   // Throw error when EQUALS and LIKE has same fields
 
   let query = {};

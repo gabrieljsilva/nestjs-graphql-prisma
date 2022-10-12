@@ -1,9 +1,9 @@
 import { Field, InputType, PartialType, PickType } from '@nestjs/graphql';
 import { filterableFieldsMap } from '@decorators';
 import { Type } from '@nestjs/common';
-import { FilterInterface } from '../../domain/interfaces/filter';
+import { FilterableInterface } from '../../../domain/interfaces/filter';
 
-export function CreateFilterOf(type: Type) {
+export function FilterableOf(type: Type) {
   const classRef = PickType(
     PartialType(type),
     filterableFieldsMap[type.name],
@@ -12,7 +12,7 @@ export function CreateFilterOf(type: Type) {
   type ClassType = typeof classRef;
 
   @InputType()
-  class Filter implements FilterInterface<ClassType> {
+  class Filterable implements FilterableInterface<ClassType> {
     @Field(() => classRef, { nullable: true })
     EQUALS: ClassType;
 
@@ -29,5 +29,5 @@ export function CreateFilterOf(type: Type) {
     OR: ClassType;
   }
 
-  return Filter;
+  return Filterable;
 }

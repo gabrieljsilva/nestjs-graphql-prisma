@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { PaginationInput } from '../../../../utils/graphql';
 import { UserPaginated } from '../../../../domain/paginations';
+import { UserFilters } from '../../../../domain/filters';
 
 @Resolver(User)
 export class UserResolver {
@@ -32,8 +33,11 @@ export class UserResolver {
   }
 
   @Query(() => UserPaginated)
-  getManyUsers(@Args('pagination') paginationInput: PaginationInput) {
-    return this.userService.getManyUsers(paginationInput);
+  getManyUsers(
+    @Args('pagination') paginationInput: PaginationInput,
+    @Args('filters') filters: UserFilters,
+  ): Promise<UserPaginated> {
+    return this.userService.getManyUsers(paginationInput, filters);
   }
 
   @Query(() => User)

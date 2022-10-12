@@ -28,13 +28,26 @@ type UserPaginated {
 }
 
 type Query {
-  getManyUsers(pagination: PaginationInput!): UserPaginated!
+  getManyUsers(pagination: PaginationInput!, filters: UserFilters!): UserPaginated!
   getUserById(id: String!): User!
 }
 
 input PaginationInput {
   take: Float!
   skip: Float!
+}
+
+input UserFilters {
+  EQUALS: PickObjectType
+  LIKE: PickObjectType
+  NOT: PickObjectType
+  AND: PickObjectType
+  OR: PickObjectType
+}
+
+input PickObjectType {
+  id: String
+  name: String
 }
 
 type Mutation {

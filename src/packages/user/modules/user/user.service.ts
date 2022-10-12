@@ -8,10 +8,13 @@ import {
 } from '@exceptions';
 import { RESOURCE } from '@enums';
 import { hashString } from '../../domain';
-import { Paginated, PaginationInput } from '../../../../utils/graphql';
-import { User } from '@models';
-import { calculatePaginationMetadata } from '../../../../utils/function';
+import { PaginationInput } from '../../../../utils/graphql';
+import {
+  calculatePaginationMetadata,
+  parseFiltersToPrismaQuery,
+} from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
+import { UserFilters } from '../../../../domain/filters';
 
 @Injectable()
 export class UserService {
@@ -47,16 +50,24 @@ export class UserService {
     });
   }
 
-  async getManyUsers({ skip, take }: PaginationInput): Promise<UserPaginated> {
+  async getManyUsers(
+    { skip, take }: PaginationInput,
+    filters?: UserFilters,
+  ): Promise<UserPaginated> {
     const totalItemsCount = await this.prismaService.user.count();
 
     if (skip < 0 || take <= 0) {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
+    const parsedFilters = parseFiltersToPrismaQuery(filters);
+
+    console.log(parsedFilters);
+
     const users = await this.prismaService.user.findMany({
       take: take,
       skip: skip,
+      where: parsedFilters,
     });
 
     const paginationMetadata = calculatePaginationMetadata({

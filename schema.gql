@@ -43,11 +43,23 @@ input UserFilters {
   NOT: PickObjectType
   AND: PickObjectType
   OR: PickObjectType
+  ORDER: Orderable
 }
 
 input PickObjectType {
   id: String
   name: String
+}
+
+""""""
+input Orderable {
+  id: OrderableOption
+  name: OrderableOption
+}
+
+enum OrderableOption {
+  asc
+  desc
 }
 
 type Mutation {

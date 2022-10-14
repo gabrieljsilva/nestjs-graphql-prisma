@@ -39,71 +39,71 @@ input PaginationInput {
 }
 
 input UserFilters {
-  filter: UserFilterOptions
+  filter: UserFilterOption
 }
 
-input UserFilterOptions {
-  Equals: UserFilterEqualsOperation!
-  Like: UserFilterLikeOperation!
-  Not: UserFilterNotOperation!
-  And: [UserFilterAndOperation!]!
-  Or: [UserFilterOrOperation!]!
+input UserFilterOption {
+  equals: UserFilterFilterequalsOperator
+  like: UserFilterFilterlikeOperator
+  not: UserFilterFilternotOperator
+  and: [UserFilterFilterandOperator!]
+  or: [UserFilterFilterorOperator!]
 }
 
-input UserFilterEqualsOperation {
+input UserFilterFilterequalsOperator {
   id: String
   name: String
 }
 
-input UserFilterLikeOperation {
+input UserFilterFilterlikeOperator {
   id: String
   name: String
 }
 
-input UserFilterNotOperation {
+input UserFilterFilternotOperator {
   id: String
   name: String
 }
 
-input UserFilterAndOperation {
+input UserFilterFilterandOperator {
   id: String
   name: String
 }
 
-input UserFilterOrOperation {
+input UserFilterFilterorOperator {
   id: String
   name: String
 }
 
 input CredentialFilters {
-  filter: CredentialsFilterOptions
+  filter: CredentialsFilterOption
 }
 
-input CredentialsFilterOptions {
-  Equals: CredentialsFilterEqualsOperation!
-  Like: CredentialsFilterLikeOperation!
-  Not: CredentialsFilterNotOperation!
-  And: [CredentialsFilterAndOperation!]!
-  Or: [CredentialsFilterOrOperation!]!
+input CredentialsFilterOption {
+  equals: CredentialsFilterFilterequalsOperator
+  like: CredentialsFilterFilterlikeOperator
+  not: CredentialsFilterFilternotOperator
+  and: [CredentialsFilterFilterandOperator!]
+  or: [CredentialsFilterFilterorOperator!]
 }
 
-input CredentialsFilterEqualsOperation {
+input CredentialsFilterFilterequalsOperator {
   email: String
 }
 
-input CredentialsFilterLikeOperation {
+input CredentialsFilterFilterlikeOperator {
   email: String
 }
 
-input CredentialsFilterNotOperation {
+input CredentialsFilterFilternotOperator {
   email: String
 }
 
-input CredentialsFilterAndOperation {
+input CredentialsFilterFilterandOperator {
   email: String
 }
 
-input CredentialsFilterOrOperation {
+input CredentialsFilterFilterorOperator {
   email: String
 }
 

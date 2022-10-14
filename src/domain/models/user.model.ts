@@ -1,13 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Credentials } from './credentials.model';
-import {
-  FilterableEntity,
-  FilterableField,
-  OrderableEntity,
-  OrderableField,
-} from '@decorators';
+import { FilterableEntity, FilterableField } from '@decorators';
 
-@OrderableEntity()
 @FilterableEntity()
 @ObjectType()
 export class User {
@@ -15,7 +9,6 @@ export class User {
   @Field()
   id: string;
 
-  @OrderableField()
   @FilterableField()
   @Field()
   name: string;

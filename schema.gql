@@ -30,6 +30,7 @@ type UserPaginated {
 type Query {
   getManyUsers(pagination: PaginationInput!, filters: UserFilters!): UserPaginated!
   getUserById(id: String!): User!
+  getCredentials(filters: CredentialFilters!): [Credentials!]!
 }
 
 input PaginationInput {
@@ -38,28 +39,72 @@ input PaginationInput {
 }
 
 input UserFilters {
-  EQUALS: PickObjectType
-  LIKE: PickObjectType
-  NOT: PickObjectType
-  AND: PickObjectType
-  OR: PickObjectType
-  ORDER: Orderable
+  filter: UserFilterOptions
 }
 
-input PickObjectType {
+input UserFilterOptions {
+  Equals: UserFilterEqualsOperation!
+  Like: UserFilterLikeOperation!
+  Not: UserFilterNotOperation!
+  And: [UserFilterAndOperation!]!
+  Or: [UserFilterOrOperation!]!
+}
+
+input UserFilterEqualsOperation {
   id: String
   name: String
 }
 
-""""""
-input Orderable {
-  id: OrderableOption
-  name: OrderableOption
+input UserFilterLikeOperation {
+  id: String
+  name: String
 }
 
-enum OrderableOption {
-  asc
-  desc
+input UserFilterNotOperation {
+  id: String
+  name: String
+}
+
+input UserFilterAndOperation {
+  id: String
+  name: String
+}
+
+input UserFilterOrOperation {
+  id: String
+  name: String
+}
+
+input CredentialFilters {
+  filter: CredentialsFilterOptions
+}
+
+input CredentialsFilterOptions {
+  Equals: CredentialsFilterEqualsOperation!
+  Like: CredentialsFilterLikeOperation!
+  Not: CredentialsFilterNotOperation!
+  And: [CredentialsFilterAndOperation!]!
+  Or: [CredentialsFilterOrOperation!]!
+}
+
+input CredentialsFilterEqualsOperation {
+  email: String
+}
+
+input CredentialsFilterLikeOperation {
+  email: String
+}
+
+input CredentialsFilterNotOperation {
+  email: String
+}
+
+input CredentialsFilterAndOperation {
+  email: String
+}
+
+input CredentialsFilterOrOperation {
+  email: String
 }
 
 type Mutation {

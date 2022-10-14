@@ -1,19 +1,20 @@
-import { FilterableInterface } from '../../domain/interfaces/filter';
+import { EntityOperations } from '../graphql/filterable/entity-operations';
 
-export function getPrismaQueryFromFilters(filters: FilterableInterface<any>) {
+export function getPrismaQueryFromFilters(operations: EntityOperations<any>) {
   // Throw error when EQUALS and LIKE has same fields
+  const { filter } = operations;
 
   let query = {};
 
-  if (filters.EQUALS) {
+  if (filter.equals) {
     query = {
       ...query,
-      ...filters.EQUALS,
+      ...filter.equals,
     };
   }
 
-  if (filters.LIKE) {
-    for (const [key, value] of Object.entries(filters.LIKE)) {
+  if (filter.like) {
+    for (const [key, value] of Object.entries(filter.like)) {
       if (!query[key]) query[key] = {};
 
       query[key] = {
@@ -24,9 +25,9 @@ export function getPrismaQueryFromFilters(filters: FilterableInterface<any>) {
     }
   }
 
-  if (filters.NOT) {
+  if (filter.not) {
     query['NOT'] = {
-      ...filters.NOT,
+      ...filter.not,
     };
   }
 

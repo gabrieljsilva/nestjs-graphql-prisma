@@ -13,6 +13,7 @@ export class User {
   @Field()
   name: string;
 
+  @FilterableField()
   @Field()
   credentials?: Credentials;
 }

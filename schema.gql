@@ -28,83 +28,13 @@ type UserPaginated {
 }
 
 type Query {
-  getManyUsers(pagination: PaginationInput!, filters: UserFilters!): UserPaginated!
+  getManyUsers(pagination: PaginationInput!): UserPaginated!
   getUserById(id: String!): User!
-  getCredentials(filters: CredentialFilters!): [Credentials!]!
 }
 
 input PaginationInput {
   take: Float!
   skip: Float!
-}
-
-input UserFilters {
-  filter: UserFilterOption
-}
-
-input UserFilterOption {
-  equals: UserFilterFilterequalsOperator
-  like: UserFilterFilterlikeOperator
-  not: UserFilterFilternotOperator
-  and: [UserFilterFilterandOperator!]
-  or: [UserFilterFilterorOperator!]
-}
-
-input UserFilterFilterequalsOperator {
-  id: String
-  name: String
-}
-
-input UserFilterFilterlikeOperator {
-  id: String
-  name: String
-}
-
-input UserFilterFilternotOperator {
-  id: String
-  name: String
-}
-
-input UserFilterFilterandOperator {
-  id: String
-  name: String
-}
-
-input UserFilterFilterorOperator {
-  id: String
-  name: String
-}
-
-input CredentialFilters {
-  filter: CredentialsFilterOption
-}
-
-input CredentialsFilterOption {
-  equals: CredentialsFilterFilterequalsOperator
-  like: CredentialsFilterFilterlikeOperator
-  not: CredentialsFilterFilternotOperator
-  and: [CredentialsFilterFilterandOperator!]
-  or: [CredentialsFilterFilterorOperator!]
-}
-
-input CredentialsFilterFilterequalsOperator {
-  email: String
-}
-
-input CredentialsFilterFilterlikeOperator {
-  email: String
-}
-
-input CredentialsFilterFilternotOperator {
-  email: String
-}
-
-input CredentialsFilterFilterandOperator {
-  email: String
-}
-
-input CredentialsFilterFilterorOperator {
-  email: String
 }
 
 type Mutation {

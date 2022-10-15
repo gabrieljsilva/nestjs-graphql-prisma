@@ -60,12 +60,11 @@ export class UserService {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
-    const parsedFilters = getPrismaQueryFromFilters(filters);
+    // const parsedFilters = getPrismaQueryFromFilters(filters);
 
     const users = await this.prismaService.user.findMany({
       take: take,
       skip: skip,
-      where: parsedFilters,
     });
 
     const paginationMetadata = calculatePaginationMetadata({

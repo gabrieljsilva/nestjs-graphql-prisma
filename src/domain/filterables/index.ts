@@ -1,2 +1,2 @@
-export * from './user.filters';
+export * from './userFilters';
 export * from './credential.filters';

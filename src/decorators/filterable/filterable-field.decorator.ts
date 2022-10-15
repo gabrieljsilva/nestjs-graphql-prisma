@@ -1,14 +1,11 @@
-import { FILTERABLE_FIELD_KEY } from '@constants';
+import { filterableMetadataStorage } from '../../utils/graphql/filterable';
 
 export function FilterableField() {
   return (target: any, key: string) => {
-    const fields = Reflect.getMetadata(
-      FILTERABLE_FIELD_KEY,
-      target.constructor,
-    );
-
-    fields
-      ? fields.push(key)
-      : Reflect.defineMetadata(FILTERABLE_FIELD_KEY, [key], target.constructor);
+    const fieldType = Reflect.getMetadata('design:type', target, key);
+    filterableMetadataStorage.defineTypeMetadata(target.constructor, {
+      name: key,
+      type: fieldType,
+    });
   };
 }

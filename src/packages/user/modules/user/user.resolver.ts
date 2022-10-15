@@ -11,7 +11,7 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { PaginationInput } from '../../../../utils/graphql';
 import { UserPaginated } from '../../../../domain/paginations';
-import { CredentialFilters, UserFilters } from '../../../../domain/filterables';
+import { UserFilters } from '../../../../domain/filterables';
 
 @Resolver(User)
 export class UserResolver {
@@ -35,19 +35,14 @@ export class UserResolver {
   @Query(() => UserPaginated)
   getManyUsers(
     @Args('pagination') paginationInput: PaginationInput,
-    @Args('filters') filters: UserFilters,
+    @Args('filters') filter: UserFilters,
   ): Promise<UserPaginated> {
-    return this.userService.getManyUsers(paginationInput, filters);
+    return this.userService.getManyUsers(paginationInput);
   }
 
   @Query(() => User)
   getUserById(@Args('id') id: string) {
     return this.userService.getUserById(id);
-  }
-
-  @Query(() => [Credentials])
-  getCredentials(@Args('filters') filters: CredentialFilters) {
-    return [];
   }
 
   @ResolveField(() => Credentials)

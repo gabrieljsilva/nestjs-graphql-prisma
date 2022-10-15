@@ -1,41 +1,41 @@
 import { Type } from '@nestjs/common';
-import { FilterOperations } from './filter-operations';
-import { EntityOperations } from './entity-operations';
-import {
-  createGraphqlTypes,
-  getLogicalOperatorsClassRefs,
-  setPatternValues,
-} from '../../function';
 import { filterableMetadataStorage } from './filterable-metadata-storage';
-import { createClassTypeRef } from '../../function/create-class-type-ref';
-import { FILTERABLE_OPTION_TYPE_NAME_PATTERN } from '@constants';
+import { LazyMetadataStorage } from '@nestjs/graphql/dist/schema-builder/storages/lazy-metadata.storage';
+import { assertClassName } from '../../function';
+import { TypeMetadataStorage } from '@nestjs/graphql';
 
 export function FilterableOf(type: Type) {
-  const { fields, typeName: refTypeName } =
-    filterableMetadataStorage.getMetadata(type.name);
-  const classTypeRef = createClassTypeRef(type, fields);
-  const filterOptionsTypeName = setPatternValues(
-    FILTERABLE_OPTION_TYPE_NAME_PATTERN,
-    { CLASS_NAME: refTypeName },
+  const metadataTypeTree = filterableMetadataStorage.getTypeMetadataTree(
+    type.name,
   );
 
-  type ClassType = typeof classTypeRef;
+  LazyMetadataStorage.store(() => {
+    for (const node of metadataTypeTree.postOrderTraversal()) {
+      if (!node.isLeaf()) {
+        node.value = assertClassName(node.value, node.value.name);
+        node.key = node.value.name;
 
-  class Filterable implements EntityOperations<ClassType> {}
-  class FilterOption implements FilterOperations<ClassType> {}
+        node.children?.forEach((leaf) => {
+          TypeMetadataStorage.addInputTypeMetadata({
+            name: leaf.key,
+            target: node.value,
+          });
+        });
 
-  const logicalOperatorsClassRefs = getLogicalOperatorsClassRefs(
-    refTypeName,
-    classTypeRef,
-  );
-
-  createGraphqlTypes({
-    typeName: type.name,
-    logicalOperatorRefs: logicalOperatorsClassRefs,
-    filterableClassRef: Filterable,
-    filterableOptionClassRef: FilterOption,
-    filterOptionsTypeName,
+        // TypeMetadataStorage.addInputTypeMetadata({
+        //   name: type.name,
+        //   properties: node.children.map((leaf) => ({
+        //     name: leaf.key,
+        //     schemaName: leaf.key,
+        //     target: leaf.parent,
+        //     options: {},
+        //     typeFn: () => leaf.value,
+        //   })),
+        //   target: node.value,
+        // });
+      }
+    }
   });
 
-  return Filterable;
+  return metadataTypeTree.getRoot().value;
 }

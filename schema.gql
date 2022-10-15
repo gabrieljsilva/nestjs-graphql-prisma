@@ -10,6 +10,9 @@ type User {
   id: String!
   name: String!
   credentials: Credentials!
+  Aaa: Credentials!
+  BBbb: Credentials!
+  CCccCCccc: [Credentials!]!
 }
 
 type PaginationMetadata {
@@ -27,14 +30,34 @@ type UserPaginated {
   meta: PaginationMetadata!
 }
 
+input CredentialsFilter {
+  email: String!
+}
+
+input UserFilter {
+  name: String!
+  credentials: CredentialsFilter!
+  Aaa: CredentialsFilter!
+  BBbb: CredentialsFilter!
+  CCccCCccc: [CredentialsFilter!]!
+}
+
 type Query {
-  getManyUsers(pagination: PaginationInput!): UserPaginated!
+  getManyUsers(pagination: PaginationInput!, filters: UserFilters!): UserPaginated!
   getUserById(id: String!): User!
 }
 
 input PaginationInput {
   take: Float!
   skip: Float!
+}
+
+input UserFilters {
+  name: String!
+  credentials: CredentialsFilter!
+  Aaa: CredentialsFilter!
+  BBbb: CredentialsFilter!
+  CCccCCccc: [CredentialsFilter!]!
 }
 
 type Mutation {

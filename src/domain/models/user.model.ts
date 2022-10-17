@@ -14,16 +14,4 @@ export class User {
   @FilterableField()
   @Field()
   credentials?: Credentials;
-
-  @FilterableField()
-  @Field()
-  Aaa?: Credentials;
-
-  @FilterableField()
-  @Field()
-  BBbb?: Credentials;
-
-  @FilterableField(() => [Credentials])
-  @Field(() => [Credentials])
-  CCccCCccc?: Credentials[];
 }

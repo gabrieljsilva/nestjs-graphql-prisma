@@ -10,9 +10,6 @@ type User {
   id: String!
   name: String!
   credentials: Credentials!
-  Aaa: Credentials!
-  BBbb: Credentials!
-  CCccCCccc: [Credentials!]!
 }
 
 type PaginationMetadata {
@@ -31,15 +28,29 @@ type UserPaginated {
 }
 
 input CredentialsFilter {
-  email: String!
+  equals: CredentialsFilterOperation
+  like: CredentialsFilterOperation
+  not: CredentialsFilterOperation
+  and: [CredentialsFilterOperation!]
+  or: [CredentialsFilterOperation!]
+}
+
+input CredentialsFilterOperation {
+  id: String
+  email: String
 }
 
 input UserFilter {
-  name: String!
-  credentials: CredentialsFilter!
-  Aaa: CredentialsFilter!
-  BBbb: CredentialsFilter!
-  CCccCCccc: [CredentialsFilter!]!
+  equals: UserFilterOperation
+  like: UserFilterOperation
+  not: UserFilterOperation
+  and: [UserFilterOperation!]
+  or: [UserFilterOperation!]
+}
+
+input UserFilterOperation {
+  name: String
+  credentials: CredentialsFilter
 }
 
 type Query {
@@ -53,11 +64,11 @@ input PaginationInput {
 }
 
 input UserFilters {
-  name: String!
-  credentials: CredentialsFilter!
-  Aaa: CredentialsFilter!
-  BBbb: CredentialsFilter!
-  CCccCCccc: [CredentialsFilter!]!
+  equals: UserFilterOperation
+  like: UserFilterOperation
+  not: UserFilterOperation
+  and: [UserFilterOperation!]
+  or: [UserFilterOperation!]
 }
 
 type Mutation {

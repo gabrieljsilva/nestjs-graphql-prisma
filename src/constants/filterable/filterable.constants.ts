@@ -1,10 +1,13 @@
-export const FILTERABLE_FIELD_KEY = 'FILTERABLE:FIELD_KEYS';
-export const FILTERABLE_OPERATOR_TYPE_NAME_PATTERN =
-  '^CLASS_NAME$Filter^LOGICAL_OPERATOR_NAME$Operator';
-export const FILTERABLE_OPTION_TYPE_NAME_PATTERN = '^CLASS_NAME$Option';
+import { LogicalOperationOptions } from '../../domain/interfaces/filter';
+
+export const FILTERABLE_OPTION_TYPE_NAME_PATTERN =
+  '^CLASS_NAME$FilterOperation';
 export const FILTERABLE_FILTER_TYPE_NAME_PATTERN = '^CLASS_NAME$Filter';
 
-export const FILTER_LOGICAL_OPERATIONS: Record<string, { isArray: boolean }> = {
+export const FILTER_LOGICAL_OPERATIONS: Record<
+  string,
+  LogicalOperationOptions
+> = {
   equals: {
     isArray: false,
   },

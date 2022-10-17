@@ -1,2 +1,1 @@
-export * from './filterableInterface';
-export * from './logical-operator-class-ref.interface';
+export * from './logical-operation-options.interface';

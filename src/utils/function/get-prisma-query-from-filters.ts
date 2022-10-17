@@ -1,9 +1,6 @@
-import { EntityOperations } from '../graphql/filterable';
+import { FilterOperations } from '../graphql/filterable';
 
-export function getPrismaQueryFromFilters(operations: EntityOperations<any>) {
-  // Throw error when EQUALS and LIKE has same fields
-  const { filter } = operations;
-
+export function getPrismaQueryFromFilters(filter: FilterOperations<any>) {
   let query = {};
 
   if (filter.equals) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@prisma/prisma.service';
+import { PrismaService } from '@prisma/module/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import {
   AlreadyExistsException,

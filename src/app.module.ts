@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from '@prisma/prisma.module';
+import { PrismaModule } from '@prisma/module/prisma.module';
 import { UserModule } from './packages';
 import { GraphqlModule } from './infra/graphql';
 

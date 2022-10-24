@@ -1,3 +1,7 @@
+//# ------------------------------------------------------
+//# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//# ------------------------------------------------------
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,18 +11,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-    @@map("users")
-    id              String          @id @default(uuid())
-    name            String
-    credentials     Credentials?
+model Credentials {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  user     User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id  String @unique
+
+  @@map("credentials")
 }
 
-model Credentials {
-    @@map("credentials")
-    id              String          @id @default(uuid())
-    email           String          @unique
-    password        String
-    user            User            @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    user_id         String          @unique
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  credentials Credentials?
+
+  @@map("users")
 }

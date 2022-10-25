@@ -10,19 +10,24 @@ export const FILTER_LOGICAL_OPERATIONS: Record<
 > = {
   equals: {
     isArray: false,
+    isComparisonOperator: true,
   },
   like: {
     isArray: false,
+    isComparisonOperator: true,
   },
   not: {
     isArray: false,
+    isComparisonOperator: true,
   },
   and: {
     isArray: true,
+    isComparisonOperator: false,
   },
   or: {
     isArray: true,
+    isComparisonOperator: false,
   },
 };
 
-export const GRAPHQL_PRIMITIVE_TYPEs = ['String', 'Number', 'Boolean'];
+export const GRAPHQL_PRIMITIVE_TYPES = ['String', 'Number', 'Boolean'];

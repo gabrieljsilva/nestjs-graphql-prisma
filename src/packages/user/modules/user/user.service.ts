@@ -9,10 +9,7 @@ import {
 import { RESOURCE } from '@enums';
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
-import {
-  calculatePaginationMetadata,
-  getPrismaQueryFromFilters,
-} from '../../../../utils/function';
+import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
 import { PrismaFilter } from '../../../../utils/filter';
@@ -60,8 +57,6 @@ export class UserService {
     if (skip < 0 || take <= 0) {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
-
-    // const parsedFilters = getPrismaQueryFromFilters(filters);
 
     const prismaQueryFilter = new PrismaFilter(filters).getQuery();
 

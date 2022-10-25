@@ -4,6 +4,7 @@ import { FilterableField } from '@decorators';
 
 @ObjectType()
 export class User {
+  @FilterableField()
   @Field()
   id: string;
 

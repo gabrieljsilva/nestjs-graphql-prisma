@@ -1,8 +1,8 @@
 import { LogicalOperationOptions } from '../../domain/interfaces/filter';
 
-export const FILTERABLE_OPTION_TYPE_NAME_PATTERN =
-  '^CLASS_NAME$FilterOperation';
 export const FILTERABLE_FILTER_TYPE_NAME_PATTERN = '^CLASS_NAME$Filter';
+export const FILTERABLE_ENTITY_TYPE_NAME_PATTERN =
+  '^CLASS_NAME$FilterableEntity';
 
 export const FILTER_LOGICAL_OPERATIONS: Record<
   string,
@@ -24,3 +24,5 @@ export const FILTER_LOGICAL_OPERATIONS: Record<
     isArray: true,
   },
 };
+
+export const GRAPHQL_PRIMITIVE_TYPEs = ['String', 'Number', 'Boolean'];

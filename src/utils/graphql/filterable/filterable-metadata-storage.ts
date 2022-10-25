@@ -9,11 +9,11 @@ export interface FieldType {
 
 class FilterableMetadataStorage {
   private metadata: Map<string, Tree<FieldType>>;
-  private createdTypesRefs: Type[];
+  private typeRefsMap: Map<string, Type>;
 
   constructor() {
     this.metadata = new Map();
-    this.createdTypesRefs = [];
+    this.typeRefsMap = new Map();
   }
 
   defineTypeMetadata(
@@ -52,23 +52,22 @@ class FilterableMetadataStorage {
     return this.metadata.get(typeName);
   }
 
-  getTypeMetadataField(typeName: string, fieldKey: string) {
-    const typeTree = this.getTypeMetadataTree(typeName);
-    return typeTree.find(fieldKey);
-  }
-
-  defineTypeAsCreated(type: Type) {
+  setTypeRef(type: Type) {
     const createdTypeAlreadyAdded = this.getCreatedTypeByKey(type.name);
-
     if (createdTypeAlreadyAdded) {
       throw new Error(`type: ${type.name} already created`);
     }
+    this.typeRefsMap.set(type.name, type);
+  }
 
-    this.createdTypesRefs.push(type);
+  setTypeRefs(...types: Type[]) {
+    for (const type of types) {
+      this.setTypeRef(type);
+    }
   }
 
   getCreatedTypeByKey(typeName: string) {
-    return this.createdTypesRefs.find((typeRef) => typeRef.name === typeName);
+    return this.typeRefsMap.get(typeName);
   }
 }
 

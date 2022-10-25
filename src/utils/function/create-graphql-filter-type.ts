@@ -1,8 +1,9 @@
 import { setPatternValues } from './set-pattern-values';
 import {
   FILTER_LOGICAL_OPERATIONS,
+  FILTERABLE_ENTITY_TYPE_NAME_PATTERN,
   FILTERABLE_FILTER_TYPE_NAME_PATTERN,
-  FILTERABLE_OPTION_TYPE_NAME_PATTERN,
+  GRAPHQL_PRIMITIVE_TYPEs,
 } from '@constants';
 import { LazyMetadataStorage } from '@nestjs/graphql/dist/schema-builder/storages/lazy-metadata.storage';
 import { TypeMetadataStorage } from '@nestjs/graphql';
@@ -18,53 +19,62 @@ export function createGraphQLFilterType(node: TreeNode<FieldType>) {
 
   if (alreadyAddedType) return;
 
-  const operationTypeName = setPatternValues(
-    FILTERABLE_OPTION_TYPE_NAME_PATTERN,
+  const schemaFilterableEntityName = setPatternValues(
+    FILTERABLE_ENTITY_TYPE_NAME_PATTERN,
     {
       CLASS_NAME: node.key,
     },
   );
 
-  const operationTypeRef = createClassRef(operationTypeName);
+  const schemaFilterableEntityRef = createClassRef(schemaFilterableEntityName);
 
-  const baseOperationProperties: PropertyMetadata[] = node.children.map(
-    (child) => {
+  const schemaFilterableEntityProperties: PropertyMetadata[] =
+    node.children.map((child) => {
+      let type = child.value.type;
+
+      if (!GRAPHQL_PRIMITIVE_TYPEs.includes(child.value.type.name)) {
+        const name = setPatternValues(FILTERABLE_ENTITY_TYPE_NAME_PATTERN, {
+          CLASS_NAME: child?.value?.type?.name,
+        });
+
+        type = filterableMetadataStorage.getCreatedTypeByKey(name);
+      }
+
       return {
         name: child.value.fieldName,
         schemaName: child.value.fieldName,
-        target: operationTypeRef,
+        target: schemaFilterableEntityRef,
         options: {
           isArray: child.value.isArray,
           arrayDepth: 1,
           nullable: true,
         },
-        typeFn: () => child.value.type,
+        typeFn: () => type,
       };
-    },
-  );
+    });
 
   LazyMetadataStorage.store(() => {
     TypeMetadataStorage.addInputTypeMetadata({
-      name: operationTypeRef.name,
-      properties: baseOperationProperties,
-      target: operationTypeRef,
+      name: schemaFilterableEntityName,
+      properties: schemaFilterableEntityProperties,
+      target: schemaFilterableEntityRef,
     });
   });
 
   const logicalOperations = Object.entries(FILTER_LOGICAL_OPERATIONS);
 
-  const properties: PropertyMetadata[] = logicalOperations.map(
+  const entityFilterProperties: PropertyMetadata[] = logicalOperations.map(
     ([name, options]) => {
       return {
         name: name,
         schemaName: name,
-        target: node.value.type,
+        target: schemaFilterableEntityRef,
         options: {
           isArray: options.isArray,
           arrayDepth: 1,
           nullable: true,
         },
-        typeFn: () => operationTypeRef,
+        typeFn: () => schemaFilterableEntityRef,
       };
     },
   );
@@ -76,10 +86,13 @@ export function createGraphQLFilterType(node: TreeNode<FieldType>) {
   LazyMetadataStorage.store(() => {
     TypeMetadataStorage.addInputTypeMetadata({
       name: typeName,
-      properties,
+      properties: entityFilterProperties,
       target: node.value.type,
     });
   });
 
-  filterableMetadataStorage.defineTypeAsCreated(node.value.type);
+  filterableMetadataStorage.setTypeRefs(
+    node.value.type,
+    schemaFilterableEntityRef,
+  );
 }

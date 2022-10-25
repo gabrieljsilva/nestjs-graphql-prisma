@@ -1,6 +1,6 @@
 import { FilterOperations } from '../graphql/filterable';
 
-export function getPrismaQueryFromFilters(filter: FilterOperations<any>) {
+export function getPrismaQueryFromFilters<T>(filter: FilterOperations<T>) {
   let query = {};
 
   if (filter.equals) {

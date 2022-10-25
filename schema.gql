@@ -28,29 +28,30 @@ type UserPaginated {
 }
 
 input CredentialsFilter {
-  equals: CredentialsFilterOperation
-  like: CredentialsFilterOperation
-  not: CredentialsFilterOperation
-  and: [CredentialsFilterOperation!]
-  or: [CredentialsFilterOperation!]
+  equals: CredentialsFilterableEntity
+  like: CredentialsFilterableEntity
+  not: CredentialsFilterableEntity
+  and: [CredentialsFilterableEntity!]
+  or: [CredentialsFilterableEntity!]
 }
 
-input CredentialsFilterOperation {
+input CredentialsFilterableEntity {
   id: String
   email: String
 }
 
 input UserFilter {
-  equals: UserFilterOperation
-  like: UserFilterOperation
-  not: UserFilterOperation
-  and: [UserFilterOperation!]
-  or: [UserFilterOperation!]
+  equals: UserFilterableEntity
+  like: UserFilterableEntity
+  not: UserFilterableEntity
+  and: [UserFilterableEntity!]
+  or: [UserFilterableEntity!]
 }
 
-input UserFilterOperation {
+input UserFilterableEntity {
+  id: String
   name: String
-  credentials: CredentialsFilter
+  credentials: CredentialsFilterableEntity
 }
 
 type Query {
@@ -64,11 +65,11 @@ input PaginationInput {
 }
 
 input UserFilters {
-  equals: UserFilterOperation
-  like: UserFilterOperation
-  not: UserFilterOperation
-  and: [UserFilterOperation!]
-  or: [UserFilterOperation!]
+  equals: UserFilterableEntity
+  like: UserFilterableEntity
+  not: UserFilterableEntity
+  and: [UserFilterableEntity!]
+  or: [UserFilterableEntity!]
 }
 
 type Mutation {

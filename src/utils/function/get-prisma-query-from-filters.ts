@@ -14,11 +14,13 @@ export function getPrismaQueryFromFilters<T>(filter: FilterOperations<T>) {
     for (const [key, value] of Object.entries(filter.like)) {
       if (!query[key]) query[key] = {};
 
-      query[key] = {
-        ...query[key],
-        contains: value,
-        mode: 'insensitive',
-      };
+      if (typeof value !== 'object') {
+        query[key] = {
+          ...query[key],
+          contains: value,
+          mode: 'insensitive',
+        };
+      }
     }
   }
 

@@ -15,6 +15,7 @@ import {
 } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
+import { PrismaFilter } from '../../../../utils/filter';
 
 @Injectable()
 export class UserService {
@@ -60,12 +61,14 @@ export class UserService {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
-    const parsedFilters = getPrismaQueryFromFilters(filters);
+    // const parsedFilters = getPrismaQueryFromFilters(filters);
+
+    const prismaQueryFilter = new PrismaFilter(filters).getQuery();
 
     const users = await this.prismaService.user.findMany({
       take: take,
       skip: skip,
-      where: parsedFilters,
+      where: prismaQueryFilter,
     });
 
     const paginationMetadata = calculatePaginationMetadata({

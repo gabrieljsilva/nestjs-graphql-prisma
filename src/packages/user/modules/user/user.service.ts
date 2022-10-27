@@ -12,7 +12,7 @@ import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
-import { PrismaFilterAdapter } from '../../../../utils/filter';
+import { PrismaFilterAdapter } from '../../../../utils/adapters';
 
 @Injectable()
 export class UserService {

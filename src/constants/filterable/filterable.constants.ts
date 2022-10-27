@@ -31,4 +31,4 @@ export const FILTER_LOGICAL_OPERATIONS: Record<
   },
 };
 
-export const GRAPHQL_PRIMITIVE_TYPES = ['String', 'Number', 'Boolean'];
+export const GRAPHQL_ATOMIC_TYPES = ['String', 'Number', 'Boolean', 'Date'];

@@ -3,7 +3,7 @@ import {
   FILTER_LOGICAL_OPERATIONS,
   FILTERABLE_ENTITY_TYPE_NAME_PATTERN,
   FILTERABLE_FILTER_TYPE_NAME_PATTERN,
-  GRAPHQL_PRIMITIVE_TYPES,
+  GRAPHQL_ATOMIC_TYPES,
 } from '@constants';
 import { LazyMetadataStorage } from '@nestjs/graphql/dist/schema-builder/storages/lazy-metadata.storage';
 import { TypeMetadataStorage } from '@nestjs/graphql';
@@ -30,7 +30,7 @@ export function createGraphQLFilterType(node: TreeNode<FieldType>) {
     node.children.map((child) => {
       let type = child.value.type;
 
-      if (!GRAPHQL_PRIMITIVE_TYPES.includes(child.value.type.name)) {
+      if (!GRAPHQL_ATOMIC_TYPES.includes(child.value.type.name)) {
         const name = setPatternValues(FILTERABLE_ENTITY_TYPE_NAME_PATTERN, {
           CLASS_NAME: child?.value?.type?.name,
         });

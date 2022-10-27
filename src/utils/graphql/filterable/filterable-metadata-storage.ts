@@ -16,10 +16,7 @@ class FilterableMetadataStorage {
     this.typeRefsMap = new Map();
   }
 
-  defineTypeMetadata(
-    constructor: Type,
-    field: Omit<FieldType, 'alreadyCreated'>,
-  ) {
+  defineTypeMetadata(constructor: Type, field: FieldType) {
     let typeTree = this.metadata.get(constructor.name);
 
     if (!typeTree) {

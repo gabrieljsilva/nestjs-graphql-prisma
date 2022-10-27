@@ -1,5 +1,5 @@
-import { FilterOperations } from './filter-operations';
+import { LogicalOperations } from './logical-operations';
 
 export interface EntityOperations<T> {
-  filter?: FilterOperations<T>;
+  filter?: LogicalOperations<T>;
 }

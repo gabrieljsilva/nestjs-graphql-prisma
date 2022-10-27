@@ -35,7 +35,7 @@ export class UserResolver {
   @Query(() => UserPaginated)
   getManyUsers(
     @Args('pagination') paginationInput: PaginationInput,
-    @Args('filters') filter: UserFilters,
+    @Args('filters', { nullable: true }) filter: UserFilters,
   ): Promise<UserPaginated> {
     return this.userService.getManyUsers(paginationInput, filter);
   }

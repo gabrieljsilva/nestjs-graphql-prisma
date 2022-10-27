@@ -1,1 +1,1 @@
-export * from './prisma.filter';
+export * from './prismaFilterAdapter';

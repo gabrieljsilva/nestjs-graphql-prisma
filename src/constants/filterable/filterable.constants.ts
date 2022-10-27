@@ -1,11 +1,12 @@
 import { LogicalOperationOptions } from '../../domain/interfaces/filter';
+import { FilterOperations } from '@enums';
 
 export const FILTERABLE_FILTER_TYPE_NAME_PATTERN = '^CLASS_NAME$Filter';
 export const FILTERABLE_ENTITY_TYPE_NAME_PATTERN =
   '^CLASS_NAME$FilterableEntity';
 
 export const FILTER_LOGICAL_OPERATIONS: Record<
-  string,
+  FilterOperations,
   LogicalOperationOptions
 > = {
   equals: {

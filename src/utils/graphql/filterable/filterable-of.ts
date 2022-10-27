@@ -1,7 +1,7 @@
 import { Type } from '@nestjs/common';
 import { filterableMetadataStorage } from './filterable-metadata-storage';
 import { createGraphQLFilterType } from '../../function';
-import { FilterOperations } from './filter-operations';
+import { LogicalOperations } from './logical-operations';
 
 export function FilterableOf<T = any>(type: Type) {
   const metadataTypeTree = filterableMetadataStorage.getTypeMetadataTree(
@@ -14,5 +14,5 @@ export function FilterableOf<T = any>(type: Type) {
     }
   }
 
-  return metadataTypeTree.getRoot().value.type as Type<FilterOperations<T>>;
+  return metadataTypeTree.getRoot().value.type as Type<LogicalOperations<T>>;
 }

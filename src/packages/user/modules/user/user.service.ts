@@ -12,7 +12,7 @@ import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
-import { PrismaFilter } from '../../../../utils/filter';
+import { PrismaFilterAdapter } from '../../../../utils/filter';
 
 @Injectable()
 export class UserService {
@@ -58,12 +58,12 @@ export class UserService {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
-    const prismaQueryFilter = new PrismaFilter(filters).getQuery();
-
+    const prismaQueryFilter = new PrismaFilterAdapter();
+    const parsedFilters = filters && prismaQueryFilter.getQuery(filters);
     const users = await this.prismaService.user.findMany({
       take: take,
       skip: skip,
-      where: prismaQueryFilter,
+      where: parsedFilters,
     });
 
     const paginationMetadata = calculatePaginationMetadata({

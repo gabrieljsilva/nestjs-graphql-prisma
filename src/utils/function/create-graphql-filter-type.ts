@@ -68,8 +68,6 @@ export function createGraphQLFilterType(node: TreeNode<FieldType>) {
         schemaName: name,
         target: schemaFilterableEntityRef,
         options: {
-          isArray: options.isArray,
-          arrayDepth: 1,
           nullable: true,
         },
         typeFn: () =>

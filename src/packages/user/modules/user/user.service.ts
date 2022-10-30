@@ -6,30 +6,36 @@ import {
   NotFoundException,
   OutOfRangeException,
 } from '@exceptions';
-import { RESOURCE } from '@enums';
+import { RESOURCE, TokenType } from '@enums';
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
 import { PrismaFilterAdapter } from '../../../../utils/adapters';
+import { MailerService } from '../../../../infra/mailer';
+import { TokenService } from '../token';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly mailerService: MailerService,
+    private readonly tokenService: TokenService,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const user = await this.prismaService.user.findFirst({
+    const alreadyRegisteredUser = await this.prismaService.user.findFirst({
       where: { credentials: { email: createUserDto.email } },
     });
 
-    if (user) {
+    if (alreadyRegisteredUser) {
       throw new AlreadyExistsException(RESOURCE.USER, {
         email: createUserDto.email,
       });
     }
 
-    return this.prismaService.user.create({
+    const user = await this.prismaService.user.create({
       data: {
         name: createUserDto.name,
         credentials: {
@@ -40,6 +46,23 @@ export class UserService {
         },
       },
     });
+
+    const token = await this.tokenService.createToken(
+      TokenType.CONFIRM_ACCOUNT,
+      createUserDto.email,
+    );
+
+    this.mailerService.sendEmail({
+      subject: 'Confirme sua conta',
+      targetsEmails: [createUserDto.email],
+      templateIdOrKey: 'confirm-account',
+      variables: {
+        userName: user.name,
+        token: token,
+      },
+    });
+
+    return user;
   }
 
   async getUserById(id: string) {

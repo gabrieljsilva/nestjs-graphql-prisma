@@ -1,0 +1,20 @@
+model Token {
+  id            String      @id @default(uuid())
+  token         String
+  credentialsId String
+  credentials   Credentials @relation(fields: [credentialsId], references: [id])
+  type          String
+  status        String
+  usageAttempts Int         @default(0)
+
+  @@map("tokens")
+}
+
+enum TokenStatus {
+  UNUSED
+  EXPIRED
+}
+
+enum TokenType {
+  ACCOUNT_CONFIRMATION
+}

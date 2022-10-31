@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { hashString } from '../../../../packages/user/domain';
+import { ROLES } from '../../../../enums';
 
-export async function seedUsers(prisma: PrismaClient) {
+export async function usersSeeder(prisma: PrismaClient) {
   const users = [
     {
       name: 'admin',
@@ -28,6 +29,11 @@ export async function seedUsers(prisma: PrismaClient) {
               email: user.email,
               password: hashString(user.password),
               status: 'ACTIVE',
+              roles: {
+                connect: {
+                  name: ROLES.SUPER_ADMIN,
+                },
+              },
             },
             where: {
               email: user.email,

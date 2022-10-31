@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenModule } from '../token';
+import { JwtStrategy } from '../../domain/strategies';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { TokenModule } from '../token';
       secret: process.env.JWT_SECRET,
     }),
   ],
-  providers: [AuthService, AuthResolver],
+  providers: [AuthService, AuthResolver, JwtStrategy],
   exports: [AuthResolver],
 })
 export class AuthModule {}

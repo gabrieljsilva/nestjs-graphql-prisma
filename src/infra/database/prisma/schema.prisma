@@ -10,6 +10,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Credentials {
   id       String            @id @default(uuid())
   email    String            @unique
@@ -17,6 +18,8 @@ model Credentials {
   user     User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id  String            @unique
   status   CredentialsStatus
+  roles    Role[]            @relation("credentials_hash_roles")
+  tokens   Token[]
 
   @@map("credentials")
 }
@@ -26,6 +29,24 @@ enum CredentialsStatus {
   INACTIVE
   WAITING_CONFIRMATION
 }
+
+model Permission {
+  id    String @id @default(uuid())
+  name  String @unique
+  roles Role[] @relation("roles_has_permissions")
+
+  @@map("permissions")
+}
+
+model Role {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  credentials Credentials[] @relation("credentials_hash_roles")
+  permissions Permission[]  @relation("roles_has_permissions")
+
+  @@map("roles")
+}
+
 model Token {
   id            String      @id @default(uuid())
   token         String
@@ -46,6 +67,7 @@ enum TokenStatus {
 enum TokenType {
   ACCOUNT_CONFIRMATION
 }
+
 model User {
   id          String       @id @default(uuid())
   name        String

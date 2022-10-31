@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { FilterableField } from '@decorators';
+import { Role } from './role.model';
 
 @ObjectType()
 export class Credentials {
@@ -11,4 +12,6 @@ export class Credentials {
   email: string;
 
   password: string;
+
+  roles: Role[];
 }

@@ -4,3 +4,4 @@ export * from './already-exists.exception';
 export * from './out-of-range.exception';
 export * from './invalid-token.exception';
 export * from './invalid-entries.exception';
+export * from './password-not-match.exception';

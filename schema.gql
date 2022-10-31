@@ -76,6 +76,8 @@ type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
   updateUserById(updateUserById: UpdateUserDto!): User!
   deleteUserById(id: String!): Boolean!
+  login(loginInput: LoginDto!): String!
+  activateAccount(activateAccountInput: ActivateAccountDto!): Credentials!
 }
 
 input CreateUserDto {
@@ -87,4 +89,14 @@ input CreateUserDto {
 input UpdateUserDto {
   id: String!
   name: String
+}
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+input ActivateAccountDto {
+  email: String!
+  token: String!
 }

@@ -22,7 +22,7 @@ services:
       - default
     ports:
       - '3000:3000'
-    command: sh -c "chmod a+x ./ && yarn install && yarn start:dev"
+    command: sh -c "yarn install && yarn start:dev"
     working_dir: /source
     volumes:
       - ./:/source

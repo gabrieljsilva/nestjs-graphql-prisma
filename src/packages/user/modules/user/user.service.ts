@@ -6,7 +6,7 @@ import {
   NotFoundException,
   OutOfRangeException,
 } from '@exceptions';
-import { RESOURCE, TokenType } from '@enums';
+import { CredentialsStatus, RESOURCE, TokenType } from '@enums';
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
@@ -19,13 +19,13 @@ import { TokenService } from '../token';
 @Injectable()
 export class UserService {
   constructor(
-    private readonly prismaService: PrismaService,
+    private readonly prisma: PrismaService,
     private readonly mailerService: MailerService,
     private readonly tokenService: TokenService,
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const alreadyRegisteredUser = await this.prismaService.user.findFirst({
+    const alreadyRegisteredUser = await this.prisma.user.findFirst({
       where: { credentials: { email: createUserDto.email } },
     });
 
@@ -35,11 +35,12 @@ export class UserService {
       });
     }
 
-    const user = await this.prismaService.user.create({
+    const user = await this.prisma.user.create({
       data: {
         name: createUserDto.name,
         credentials: {
           create: {
+            status: CredentialsStatus.WAITING_CONFIRMATION,
             email: createUserDto.email,
             password: hashString(createUserDto.password),
           },
@@ -48,7 +49,7 @@ export class UserService {
     });
 
     const token = await this.tokenService.createToken(
-      TokenType.CONFIRM_ACCOUNT,
+      TokenType.ACCOUNT_CONFIRMATION,
       createUserDto.email,
     );
 
@@ -66,7 +67,7 @@ export class UserService {
   }
 
   async getUserById(id: string) {
-    return this.prismaService.user.findFirst({
+    return this.prisma.user.findFirst({
       where: { id },
     });
   }
@@ -75,18 +76,30 @@ export class UserService {
     { skip, take }: PaginationInput,
     filters?: UserFilters,
   ): Promise<UserPaginated> {
-    const totalItemsCount = await this.prismaService.user.count();
+    const totalItemsCount = await this.prisma.user.count({
+      where: {
+        credentials: {
+          status: CredentialsStatus.ACTIVE,
+        },
+      },
+    });
 
     if (skip < 0 || take <= 0) {
       throw new OutOfRangeException(take, skip, totalItemsCount);
     }
 
     const prismaQueryFilter = new PrismaFilterAdapter();
-    const parsedFilters = filters && prismaQueryFilter.getQuery(filters);
-    const users = await this.prismaService.user.findMany({
+    const findUsersFilters = filters && prismaQueryFilter.getQuery(filters);
+
+    const users = await this.prisma.user.findMany({
       take: take,
       skip: skip,
-      where: parsedFilters,
+      where: {
+        credentials: {
+          status: CredentialsStatus.ACTIVE,
+          AND: findUsersFilters,
+        },
+      },
     });
 
     const paginationMetadata = calculatePaginationMetadata({
@@ -102,13 +115,13 @@ export class UserService {
   }
 
   async getCredentialsByUserId(id: string) {
-    return this.prismaService.credentials.findFirst({
+    return this.prisma.credentials.findFirst({
       where: { user_id: id },
     });
   }
 
   async updateUserById({ id, ...updateUserDto }: UpdateUserDto) {
-    const user = await this.prismaService.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { id },
     });
 
@@ -116,14 +129,14 @@ export class UserService {
       throw new NotFoundException(RESOURCE.USER, { id });
     }
 
-    return this.prismaService.user.update({
+    return this.prisma.user.update({
       where: { id },
       data: updateUserDto,
     });
   }
 
   async deleteUserById(id: string) {
-    const user = await this.prismaService.user.findFirst({
+    const user = await this.prisma.user.findFirst({
       where: { id },
       select: { credentials: true },
     });
@@ -132,7 +145,7 @@ export class UserService {
       throw new NotFoundException(RESOURCE.USER, { id });
     }
 
-    await this.prismaService.user.delete({
+    await this.prisma.user.delete({
       where: { id },
       include: { credentials: true },
     });

@@ -1,5 +1,5 @@
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
-import { BaseException } from '../../../exceptions/base.exception';
+import { BaseException } from '@exceptions';
 import { EXCEPTION_CODES } from '@enums';
 import { Exception } from '@interfaces';
 

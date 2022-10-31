@@ -1,0 +1,5 @@
+export enum CredentialsStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  WAITING_CONFIRMATION = 'WAITING_CONFIRMATION',
+}

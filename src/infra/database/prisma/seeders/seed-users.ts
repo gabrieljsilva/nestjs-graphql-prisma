@@ -27,6 +27,7 @@ export async function seedUsers(prisma: PrismaClient) {
             create: {
               email: user.email,
               password: hashString(user.password),
+              status: 'ACTIVE',
             },
             where: {
               email: user.email,

@@ -12,14 +12,21 @@ datasource db {
 }
 
 model Credentials {
-  id       String  @id @default(uuid())
-  email    String  @unique
+  id       String            @id @default(uuid())
+  email    String            @unique
   password String
-  user     User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id  String  @unique
+  user     User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id  String            @unique
+  status   CredentialsStatus
   Token    Token[]
 
   @@map("credentials")
+}
+
+enum CredentialsStatus {
+  ACTIVE
+  INACTIVE
+  WAITING_CONFIRMATION
 }
 
 model Token {
@@ -27,8 +34,8 @@ model Token {
   token         String
   credentialsId String
   credentials   Credentials @relation(fields: [credentialsId], references: [id])
-  type          String
-  status        String
+  type          TokenType
+  status        TokenStatus
   usageAttempts Int         @default(0)
 
   @@map("tokens")

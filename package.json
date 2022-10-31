@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "sync:schema": "cd src/infra/database/prisma/models && cat ../config/auto-generated-file-placeholder.txt ../config/config.prisma *.prisma > ../schema.prisma && npx prisma format",
-    "post:sync:schema": "npx prisma generate"
+    "post:sync:schema": "npx prisma generate",
+    "migrate:dev": "npx prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.1.3",

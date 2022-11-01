@@ -1,7 +1,7 @@
 model Role {
   id          String        @id @default(uuid())
   name        String        @unique
-  credentials Credentials[] @relation("credentials_hash_roles")
+  credentials Credentials[] @relation("credentials_has_roles")
   permissions Permission[]  @relation("roles_has_permissions")
 
   @@map("roles")

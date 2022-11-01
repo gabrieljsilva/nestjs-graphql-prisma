@@ -13,24 +13,34 @@ export async function rolesSeeder(prisma: PrismaClient) {
     ],
   };
 
-  for (const [role, permissions] of Object.entries(rolesPermissions)) {
-    for (const permission of permissions) {
-      await prisma.role.upsert({
-        where: {
-          name: role,
-        },
-        create: {
-          name: role,
-          permissions: {
-            connect: permissions.map((permission) => ({ name: permission })),
-          },
-        },
-        update: {
+  for (const [roleName, permissions] of Object.entries(rolesPermissions)) {
+    const role = await prisma.role.findFirst({
+      where: { name: roleName },
+      include: {
+        permissions: true,
+      },
+    });
+
+    if (!role) {
+      return await prisma.role.create({
+        data: {
+          name: roleName,
           permissions: {
             connect: permissions.map((permission) => ({ name: permission })),
           },
         },
       });
     }
+
+    await prisma.role.update({
+      where: {
+        name: roleName,
+      },
+      data: {
+        permissions: {
+          connect: permissions.map((permission) => ({ name: permission })),
+        },
+      },
+    });
   }
 }

@@ -18,7 +18,7 @@ model Credentials {
   user     User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id  String            @unique
   status   CredentialsStatus
-  roles    Role[]            @relation("credentials_hash_roles")
+  roles    Role[]            @relation("credentials_has_roles")
   tokens   Token[]
 
   @@map("credentials")
@@ -41,7 +41,7 @@ model Permission {
 model Role {
   id          String        @id @default(uuid())
   name        String        @unique
-  credentials Credentials[] @relation("credentials_hash_roles")
+  credentials Credentials[] @relation("credentials_has_roles")
   permissions Permission[]  @relation("roles_has_permissions")
 
   @@map("roles")

@@ -55,7 +55,7 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "_credentials_hash_roles" (
+CREATE TABLE "_credentials_has_roles" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
@@ -79,10 +79,10 @@ CREATE UNIQUE INDEX "permissions_name_key" ON "permissions"("name");
 CREATE UNIQUE INDEX "roles_name_key" ON "roles"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_credentials_hash_roles_AB_unique" ON "_credentials_hash_roles"("A", "B");
+CREATE UNIQUE INDEX "_credentials_has_roles_AB_unique" ON "_credentials_has_roles"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_credentials_hash_roles_B_index" ON "_credentials_hash_roles"("B");
+CREATE INDEX "_credentials_has_roles_B_index" ON "_credentials_has_roles"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_roles_has_permissions_AB_unique" ON "_roles_has_permissions"("A", "B");
@@ -97,10 +97,10 @@ ALTER TABLE "credentials" ADD CONSTRAINT "credentials_user_id_fkey" FOREIGN KEY 
 ALTER TABLE "tokens" ADD CONSTRAINT "tokens_credentialsId_fkey" FOREIGN KEY ("credentialsId") REFERENCES "credentials"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_credentials_hash_roles" ADD CONSTRAINT "_credentials_hash_roles_A_fkey" FOREIGN KEY ("A") REFERENCES "credentials"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_credentials_has_roles" ADD CONSTRAINT "_credentials_has_roles_A_fkey" FOREIGN KEY ("A") REFERENCES "credentials"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_credentials_hash_roles" ADD CONSTRAINT "_credentials_hash_roles_B_fkey" FOREIGN KEY ("B") REFERENCES "roles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_credentials_has_roles" ADD CONSTRAINT "_credentials_has_roles_B_fkey" FOREIGN KEY ("B") REFERENCES "roles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_roles_has_permissions" ADD CONSTRAINT "_roles_has_permissions_A_fkey" FOREIGN KEY ("A") REFERENCES "permissions"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -8,7 +8,7 @@ import { MailerModule } from './infra/mailer';
   imports: [
     GraphqlModule,
     PrismaModule,
-    MailerModule,
+    MailerModule.forRoot(),
     TokenModule,
     UserModule,
     AuthModule,

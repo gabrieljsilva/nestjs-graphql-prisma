@@ -5,7 +5,7 @@ import { MailerModule } from '../../../../infra/mailer';
 import { TokenModule } from '../token';
 
 @Module({
-  imports: [MailerModule, TokenModule],
+  imports: [MailerModule.forRoot(), TokenModule],
   providers: [UserService, UserResolver],
   exports: [UserResolver],
 })

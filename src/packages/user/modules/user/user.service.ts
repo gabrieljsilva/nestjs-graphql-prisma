@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/module/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
-import {
-  AlreadyExistsException,
-  NotFoundException,
-  OutOfRangeException,
-} from '@exceptions';
+import { AlreadyExistsException, NotFoundException } from '@exceptions';
 import { CredentialsStatus, RESOURCE, TokenType } from '@enums';
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';

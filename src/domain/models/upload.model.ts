@@ -19,9 +19,5 @@ export class Upload {
   @FilterableField()
   key: string;
 
-  @Field()
-  @FilterableField()
-  url: string;
-
   bucket: string;
 }

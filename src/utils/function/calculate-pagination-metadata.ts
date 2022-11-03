@@ -15,7 +15,8 @@ export function calculatePaginationMetadata({
   const totalPages = Math.ceil(totalItemsCount / take);
   const currentPage = Math.ceil(skip / take) + 1;
   const hasNextPage = skip + take < totalItemsCount;
-  const hasPreviousPage = currentPage <= totalPages && currentPage > 0;
+  const hasPreviousPage =
+    currentPage <= totalPages && currentPage > 0 && currentPage > 1;
 
   if (currentPage > totalPages) {
     throw new OutOfRangeException(take, skip, totalItemsCount);

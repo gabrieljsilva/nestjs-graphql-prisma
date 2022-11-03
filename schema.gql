@@ -17,7 +17,6 @@ type Upload {
   originalName: String!
   mimeType: String!
   key: String!
-  url: String!
 }
 
 type PaginationMetadata {
@@ -32,6 +31,11 @@ type PaginationMetadata {
 
 type UserPaginated {
   items: [User!]!
+  meta: PaginationMetadata!
+}
+
+type UploadPaginated {
+  items: [Upload!]!
   meta: PaginationMetadata!
 }
 
@@ -75,13 +79,12 @@ input UploadFilterableEntity {
   originalName: String
   mimeType: String
   key: String
-  url: String
 }
 
 type Query {
   getManyUsers(pagination: PaginationInput!, filters: UserFilters): UserPaginated!
   getUserById(id: String!): User!
-  getUploads(filters: UploadFilters!): [Upload!]!
+  getUploads(filters: UploadFilters!, pagination: PaginationInput!): UploadPaginated!
 }
 
 input PaginationInput {

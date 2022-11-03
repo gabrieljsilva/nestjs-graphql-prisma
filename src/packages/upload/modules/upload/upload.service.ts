@@ -1,10 +1,12 @@
 import { Injectable, StreamableFile } from '@nestjs/common';
 import { UploaderService } from '../../../../infra/uploader/uploader.service';
 import { PrismaService } from '@prisma/module';
-import { NotFoundException } from '@exceptions';
+import { NotFoundException, OutOfRangeException } from '@exceptions';
 import { RESOURCE } from '@enums';
 import { UploadFilters } from '../../../../domain/filterables';
 import { PrismaFilterAdapter } from '../../../../utils/adapters';
+import { PaginationInput } from '../../../../utils/graphql';
+import { calculatePaginationMetadata } from '../../../../utils/function';
 
 @Injectable()
 export class UploadService {
@@ -33,11 +35,31 @@ export class UploadService {
     });
   }
 
-  async getUploads(filters?: UploadFilters) {
+  async getUploads(
+    paginationInput = new PaginationInput(),
+    filters?: UploadFilters,
+  ) {
+    const { take, skip } = paginationInput;
+
+    const totalItemsCount = await this.prisma.upload.count();
+
     const filterAdapter = new PrismaFilterAdapter();
 
-    return await this.prisma.upload.findMany({
+    const uploads = await this.prisma.upload.findMany({
+      take,
+      skip,
       where: filters && filterAdapter.getQuery(filters),
     });
+
+    const paginationMetadata = calculatePaginationMetadata({
+      skip,
+      take,
+      totalItemsCount,
+    });
+
+    return {
+      items: uploads,
+      meta: paginationMetadata,
+    };
   }
 }

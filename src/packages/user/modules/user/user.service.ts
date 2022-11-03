@@ -84,10 +84,6 @@ export class UserService {
       },
     });
 
-    if (skip < 0 || take <= 0) {
-      throw new OutOfRangeException(take, skip, totalItemsCount);
-    }
-
     const prismaQueryFilter = new PrismaFilterAdapter();
     const findUsersFilters = filters && prismaQueryFilter.getQuery(filters);
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TokenStatus, TokenType } from '@enums';
+import { TOKEN_STATUS, TOKEN_TYPE } from '@enums';
 import { PrismaService } from '@prisma/module';
 import {
   compareHashString,
@@ -12,7 +12,7 @@ import { InvalidTokenException } from '@exceptions';
 export class TokenService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createToken(type: TokenType, email: string) {
+  async createToken(type: TOKEN_TYPE, email: string) {
     const token = await generateRandomToken(5);
     const hashedToken = hashString(token);
 
@@ -20,7 +20,7 @@ export class TokenService {
       data: {
         token: hashedToken,
         type: type,
-        status: TokenStatus.UNUSED,
+        status: TOKEN_STATUS.UNUSED,
         credentials: {
           connect: { email: email },
         },
@@ -31,7 +31,7 @@ export class TokenService {
   }
 
   async validateTokenOrThrowException(
-    type: TokenType,
+    type: TOKEN_TYPE,
     tokenString: string,
     email: string,
   ) {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/module/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { AlreadyExistsException, NotFoundException } from '@exceptions';
-import { CredentialsStatus, RESOURCE, TokenType } from '@enums';
+import { CREDENTIALS_STATUS, RESOURCE, TOKEN_TYPE } from '@enums';
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
@@ -36,7 +36,7 @@ export class UserService {
         name: createUserDto.name,
         credentials: {
           create: {
-            status: CredentialsStatus.WAITING_CONFIRMATION,
+            status: CREDENTIALS_STATUS.WAITING_CONFIRMATION,
             email: createUserDto.email,
             password: hashString(createUserDto.password),
           },
@@ -45,7 +45,7 @@ export class UserService {
     });
 
     const token = await this.tokenService.createToken(
-      TokenType.ACCOUNT_CONFIRMATION,
+      TOKEN_TYPE.ACCOUNT_CONFIRMATION,
       createUserDto.email,
     );
 
@@ -75,7 +75,7 @@ export class UserService {
     const totalItemsCount = await this.prisma.user.count({
       where: {
         credentials: {
-          status: CredentialsStatus.ACTIVE,
+          status: CREDENTIALS_STATUS.ACTIVE,
         },
       },
     });
@@ -88,7 +88,7 @@ export class UserService {
       skip: skip,
       where: {
         credentials: {
-          status: CredentialsStatus.ACTIVE,
+          status: CREDENTIALS_STATUS.ACTIVE,
           AND: findUsersFilters,
         },
       },

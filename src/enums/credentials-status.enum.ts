@@ -1,4 +1,4 @@
-export enum CredentialsStatus {
+export enum CREDENTIALS_STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   WAITING_CONFIRMATION = 'WAITING_CONFIRMATION',

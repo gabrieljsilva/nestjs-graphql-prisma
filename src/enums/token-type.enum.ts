@@ -1,3 +1,3 @@
-export enum TokenType {
+export enum TOKEN_TYPE {
   'ACCOUNT_CONFIRMATION' = 'ACCOUNT_CONFIRMATION',
 }

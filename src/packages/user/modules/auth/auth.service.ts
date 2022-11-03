@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ActivateAccountDto, LoginDto } from '@dtos';
 import { NotFoundException, PasswordNotMatchException } from '@exceptions';
-import { CredentialsStatus, RESOURCE, TokenType } from '@enums';
+import { CREDENTIALS_STATUS, RESOURCE, TOKEN_TYPE } from '@enums';
 import { PrismaService } from '@prisma/module';
 import { compareHashString } from '../../domain';
 import { TokenService } from '../token';
@@ -25,7 +25,7 @@ export class AuthService {
 
   async validateCredentialsOrThrowError(email: string, password: string) {
     const credentials = await this.prisma.credentials.findFirst({
-      where: { email, status: CredentialsStatus.ACTIVE },
+      where: { email, status: CREDENTIALS_STATUS.ACTIVE },
     });
 
     if (!credentials) {
@@ -44,18 +44,18 @@ export class AuthService {
   async activateAccount(activateAccountDto: ActivateAccountDto) {
     const { email, token } = activateAccountDto;
     const credentials = await this.prisma.credentials.findFirst({
-      where: { email, status: CredentialsStatus.WAITING_CONFIRMATION },
+      where: { email, status: CREDENTIALS_STATUS.WAITING_CONFIRMATION },
     });
 
     if (!credentials) {
       throw new NotFoundException(RESOURCE.USER, {
         email,
-        status: CredentialsStatus.WAITING_CONFIRMATION,
+        status: CREDENTIALS_STATUS.WAITING_CONFIRMATION,
       });
     }
 
     await this.tokenService.validateTokenOrThrowException(
-      TokenType.ACCOUNT_CONFIRMATION,
+      TOKEN_TYPE.ACCOUNT_CONFIRMATION,
       token,
       email,
     );
@@ -63,7 +63,7 @@ export class AuthService {
     return this.prisma.credentials.update({
       where: { email },
       data: {
-        status: CredentialsStatus.ACTIVE,
+        status: CREDENTIALS_STATUS.ACTIVE,
       },
     });
   }

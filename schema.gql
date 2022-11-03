@@ -12,6 +12,14 @@ type User {
   credentials: Credentials!
 }
 
+type Upload {
+  id: String!
+  originalName: String!
+  mimeType: String!
+  key: String!
+  url: String!
+}
+
 type PaginationMetadata {
   currentPage: Float!
   totalPages: Float!
@@ -54,9 +62,26 @@ input UserFilterableEntity {
   credentials: CredentialsFilterableEntity
 }
 
+input UploadFilter {
+  equals: UploadFilterableEntity
+  like: UploadFilterableEntity
+  not: UploadFilterableEntity
+  and: UploadFilter
+  or: UploadFilter
+}
+
+input UploadFilterableEntity {
+  id: String
+  originalName: String
+  mimeType: String
+  key: String
+  url: String
+}
+
 type Query {
   getManyUsers(pagination: PaginationInput!, filters: UserFilters): UserPaginated!
   getUserById(id: String!): User!
+  getUploads(filters: UploadFilters!): [Upload!]!
 }
 
 input PaginationInput {
@@ -70,6 +95,14 @@ input UserFilters {
   not: UserFilterableEntity
   and: UserFilter
   or: UserFilter
+}
+
+input UploadFilters {
+  equals: UploadFilterableEntity
+  like: UploadFilterableEntity
+  not: UploadFilterableEntity
+  and: UploadFilter
+  or: UploadFilter
 }
 
 type Mutation {

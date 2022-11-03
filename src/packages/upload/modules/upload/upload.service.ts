@@ -3,6 +3,8 @@ import { UploaderService } from '../../../../infra/uploader/uploader.service';
 import { PrismaService } from '@prisma/module';
 import { NotFoundException } from '@exceptions';
 import { RESOURCE } from '@enums';
+import { UploadFilters } from '../../../../domain/filterables';
+import { PrismaFilterAdapter } from '../../../../utils/adapters';
 
 @Injectable()
 export class UploadService {
@@ -28,6 +30,14 @@ export class UploadService {
 
     return new StreamableFile(file, {
       type: upload.mimeType,
+    });
+  }
+
+  async getUploads(filters?: UploadFilters) {
+    const filterAdapter = new PrismaFilterAdapter();
+
+    return await this.prisma.upload.findMany({
+      where: filters && filterAdapter.getQuery(filters),
     });
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/module';
 import { FileUploader } from './domain/types';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UploaderService {
@@ -11,12 +12,12 @@ export class UploaderService {
 
   async upload(file: Express.Multer.File) {
     const fileMetadata = await this.fileUploader.upload(file);
+    const id = randomUUID();
 
     return this.prisma.upload.create({
       data: {
-        id: fileMetadata.key,
+        id,
         key: fileMetadata.key,
-        url: fileMetadata.url,
         mimeType: fileMetadata.mimeType,
         originalName: fileMetadata.originalName,
       },

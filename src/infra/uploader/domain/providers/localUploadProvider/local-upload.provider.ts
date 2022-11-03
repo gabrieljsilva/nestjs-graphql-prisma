@@ -23,15 +23,6 @@ export class LocalUploadProvider implements FileUploader {
     return join(this.path, key);
   }
 
-  private static getFileUrl(key: string) {
-    const protocol = process.env.API_PROTOCOL;
-    const host = process.env.API_HOST;
-    const port = process.env.API_PORT;
-
-    const getFileEndpoint = 'upload';
-    return `${protocol}://${host}:${port}/${getFileEndpoint}/${key}`;
-  }
-
   async exists(key: string): Promise<boolean> {
     try {
       accessSync(this.getFilePath(key));
@@ -65,7 +56,6 @@ export class LocalUploadProvider implements FileUploader {
         fileMetadata.key = key;
         fileMetadata.originalName = file.originalname;
         fileMetadata.mimeType = file.mimetype;
-        fileMetadata.url = LocalUploadProvider.getFileUrl(key);
 
         resolve(fileMetadata);
       });

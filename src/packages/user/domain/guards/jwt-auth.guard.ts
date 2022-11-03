@@ -2,7 +2,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { UnauthorizedException } from '../exceptions/invalid-token-exception';
+import { UnauthorizedException } from '../../../../exceptions/invalid-token-exception';
 import { IS_PUBLIC_QUERY_METADATA_KEY } from '@constants';
 
 @Injectable()

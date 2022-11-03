@@ -1,7 +1,7 @@
 import { Injectable, StreamableFile } from '@nestjs/common';
 import { UploaderService } from '../../../../infra/uploader/uploader.service';
 import { PrismaService } from '@prisma/module';
-import { NotFoundException, OutOfRangeException } from '@exceptions';
+import { NotFoundException } from '@exceptions';
 import { RESOURCE } from '@enums';
 import { UploadFilters } from '../../../../domain/filterables';
 import { PrismaFilterAdapter } from '../../../../utils/adapters';

@@ -1,4 +1,4 @@
-import { LogicalOperationOptions } from '../../domain/interfaces/filter';
+import { LogicalOperationOptions } from '@interfaces';
 import { FILTER_OPERATIONS } from '@enums';
 
 export const FILTERABLE_FILTER_TYPE_NAME_PATTERN = '^CLASS_NAME$Filter';

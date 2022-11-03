@@ -1,8 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { PrismaService } from '@prisma/module';
-import { REQUIRED_PERMISSIONS_METADATA_KEY } from '../constants/metadata/metadata.constants';
+import { REQUIRED_PERMISSIONS_METADATA_KEY } from '@constants';
 import { Credentials } from '@models';
 import { PERMISSIONS } from '@enums';
 

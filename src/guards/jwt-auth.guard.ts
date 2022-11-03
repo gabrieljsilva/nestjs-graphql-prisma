@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { UnauthorizedException } from '../exceptions/invalid-token-exception';
-import { IS_PUBLIC_QUERY_METADATA_KEY } from '../constants/metadata/metadata.constants';
+import { IS_PUBLIC_QUERY_METADATA_KEY } from '@constants';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

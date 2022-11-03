@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from '@prisma/module/prisma.module';
-import { AuthModule, TokenModule, UserModule } from './packages';
+import { AuthModule, TokenModule, UploadModule, UserModule } from './packages';
 import { GraphqlModule } from './infra/graphql';
-import { UploadModule } from './packages/upload/modules/upload';
 
 @Module({
   imports: [

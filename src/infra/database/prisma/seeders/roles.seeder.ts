@@ -3,7 +3,10 @@ import { PERMISSIONS, ROLES } from '../../../../enums';
 
 export async function rolesSeeder(prisma: PrismaClient) {
   const rolesPermissions: Record<ROLES, PERMISSIONS[]> = {
-    [ROLES.SUPER_ADMIN]: [PERMISSIONS.CAN_GET_USERS],
+    [ROLES.SUPER_ADMIN]: [
+      PERMISSIONS.CAN_GET_USERS,
+      PERMISSIONS.CAN_UPLOAD_FILE,
+    ],
 
     [ROLES.USER]: [
       PERMISSIONS.CAN_DELETE_USER,

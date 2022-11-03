@@ -1,0 +1,10 @@
+model Upload {
+  id           String  @id @default(uuid())
+  originalName String
+  mimeType     String
+  key          String
+  url          String
+  bucket       String?
+
+  @@map("uploads")
+}

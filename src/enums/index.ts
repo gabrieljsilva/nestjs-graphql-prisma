@@ -6,3 +6,4 @@ export * from './token-status.enum';
 export * from './credentials-status.enum';
 export * from './permissions';
 export * from './roles.enum';
+export * from './buckets.enum';

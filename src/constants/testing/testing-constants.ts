@@ -1,0 +1,1 @@
+export const TESTING_GROUP_KEY = 'TESTING_GROUP';

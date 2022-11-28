@@ -81,7 +81,6 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -91,18 +90,14 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
+    "rootDir": ".",
     "moduleNameMapper": {
-      "^@constants/(.*)$": "<rootDir>/../src/constants/index.ts",
-      "^@decorators/(.*)$": "<rootDir>/../src/decorators/index.ts",
-      "^@enums/(.*)$": "<rootDir>/../src/enums/index.ts",
-      "^@exception-filters/(.*)$": "<rootDir>/../src/exception-filters/index.ts",
-      "^@exceptions/(.*)$": "<rootDir>/../src/exceptions/index.ts",
-      "^@guards/(.*)$": "<rootDir>/../src/guards/index.ts",
-      "^@middlewares/(.*)$": "<rootDir>/../src/middlewares/index.ts",
-      "^@types/(.*)$": "<rootDir>/../src/types/index.ts",
-      "^@utils/(.*)$": "<rootDir>/../src/utils/index.ts",
-      "^@models/(.*)$": "<rootDir>/../src/models/index.ts",
-      "^@prisma/(.*)$": "<rootDir>/../src/infra/database/prisma/$1"
+      "@constants": "<rootDir>/src/constants/index.ts",
+      "@decorators": "<rootDir>/src/decorators/index.ts",
+      "@enums": "<rootDir>/src/enums/index.ts",
+      "@models": "<rootDir>/src/domain/models/index.ts",
+      "@exceptions": "<rootDir>/src/exceptions/index.ts",
+      "@testing": "<rootDir>/src/utils/testing/index.ts"
     }
   },
   "prisma": {

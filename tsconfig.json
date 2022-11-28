@@ -31,7 +31,8 @@
       "@models": ["src/domain/models"],
       "@dtos": ["src/domain/dtos"],
       "@interfaces": ["src/domain/interfaces"],
-      "@prisma/*": ["src/infra/database/prisma/*"]
+      "@prisma/*": ["src/infra/database/prisma/*"],
+      "@testing": ["src/utils/testing"]
     }
   }
 }

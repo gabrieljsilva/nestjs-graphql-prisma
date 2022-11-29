@@ -1,3 +1,4 @@
+import { applyDecorators } from '@nestjs/common';
 import { ClassConstructor, Expose, Transform } from 'class-transformer';
 import * as R from 'ramda';
 import { createTestingClassInstance } from '@testing';
@@ -20,29 +21,27 @@ function getDefaultValue(
 export function DefaultTestingValue<T = any>(
   defaultType: () => ClassConstructor<T>,
 ): PropertyDecorator;
-export function DefaultTestingValue<T = any>(
-  defaultValue: unknown,
-): PropertyDecorator;
+export function DefaultTestingValue(defaultValue: unknown): PropertyDecorator;
 export function DefaultTestingValue<T = any>(
   defaultValue: unknown | (() => ClassConstructor<T>),
 ): PropertyDecorator {
   if (typeof defaultValue === 'function') {
-    let cls = defaultValue();
-    const isArray = Array.isArray(cls);
+    let classType = defaultValue();
+    const isArray = Array.isArray(classType);
     if (isArray) {
-      [cls] = cls;
+      [classType] = classType;
     }
-    const classInstance = createTestingClassInstance(cls);
+    const classInstance = createTestingClassInstance(classType);
     defaultValue = isArray ? [classInstance] : classInstance;
   }
 
-  return (target, key) => {
-    Expose({ groups: [TESTING_GROUP_KEY] })(target, key);
+  return applyDecorators(
+    Expose({ groups: [TESTING_GROUP_KEY] }),
     Transform(
       ({ value, obj, key }) => getDefaultValue(value, obj, key, defaultValue),
       {
         groups: [TESTING_GROUP_KEY],
       },
-    )(target, key);
-  };
+    ),
+  );
 }

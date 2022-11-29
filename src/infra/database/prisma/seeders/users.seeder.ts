@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { hashString } from '../../../../packages/user/domain';
+import { hashString } from '../../../../packages/user/domain/hashing';
 import { ROLES } from '../../../../enums';
 
 export async function usersSeeder(prisma: PrismaClient) {

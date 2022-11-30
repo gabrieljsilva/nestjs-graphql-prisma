@@ -20,7 +20,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: DEV
     command: "sh -c 'yarn start:dev'"
     networks:
       - default

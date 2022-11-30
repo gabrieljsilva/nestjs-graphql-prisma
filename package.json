@@ -99,7 +99,8 @@
       "@enums": "<rootDir>/src/enums/index.ts",
       "@models": "<rootDir>/src/domain/models/index.ts",
       "@exceptions": "<rootDir>/src/exceptions/index.ts",
-      "@testing": "<rootDir>/src/utils/testing/index.ts"
+      "@testing": "<rootDir>/src/utils/testing/index.ts",
+      "@prisma/module": "<rootDir>/src/infra/database/prisma/module/index.ts"
     }
   },
   "prisma": {

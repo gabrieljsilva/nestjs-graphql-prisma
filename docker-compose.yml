@@ -17,19 +17,22 @@ services:
 
   api_v1:
     container_name: api_v1
-    image: 'node:16.16.0-alpine'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: DEV
+    command: "sh -c 'yarn start:dev'"
     networks:
       - default
     ports:
       - '3000:3000'
-    command: sh -c "yarn install && yarn start:dev"
-    working_dir: /source
     volumes:
       - ./:/source
     env_file:
       - .env
     environment:
-      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_NAME}'
+      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}'
+    restart: always
 
 networks:
   default:

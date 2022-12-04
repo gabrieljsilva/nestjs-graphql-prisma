@@ -1,5 +1,7 @@
 #!/bin/bash
-/bin/bash ./load_nvm.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 cd /home/ec2-user/app/
 npm install

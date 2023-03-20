@@ -4,15 +4,17 @@ import { PrismaService } from '@prisma/module';
 import { NotFoundException } from '@exceptions';
 import { RESOURCE } from '@enums';
 import { UploadFilters } from '../../../../domain/filterables';
-import { PrismaFilterAdapter } from '../../../../utils/adapters';
 import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
+import { GraphqlFilterService } from '@gabrieljsilva/nestjs-graphql-filter';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UploadService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly uploaderService: UploaderService,
+    private readonly graphqlFilterService: GraphqlFilterService,
   ) {}
 
   async uploadFile(file: Express.Multer.File) {
@@ -43,12 +45,11 @@ export class UploadService {
 
     const totalItemsCount = await this.prisma.upload.count();
 
-    const filterAdapter = new PrismaFilterAdapter();
-
     const uploads = await this.prisma.upload.findMany({
       take,
       skip,
-      where: filters && filterAdapter.getQuery(filters),
+      where:
+        this.graphqlFilterService.getQuery<Prisma.UploadWhereInput>(filters),
     });
 
     const paginationMetadata = calculatePaginationMetadata({

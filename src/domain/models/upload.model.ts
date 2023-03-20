@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { FilterableField } from '@decorators';
+import { FilterableField } from '@gabrieljsilva/nestjs-graphql-filter';
 
 @ObjectType()
 export class Upload {

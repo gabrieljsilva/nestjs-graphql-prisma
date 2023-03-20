@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Credentials } from './credentials.model';
-import { DefaultTestingValue, FilterableField } from '@decorators';
+import { DefaultTestingValue } from '@decorators';
+import { FilterableField } from '@gabrieljsilva/nestjs-graphql-filter';
 
 @ObjectType()
 export class User {

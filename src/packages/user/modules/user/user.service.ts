@@ -8,9 +8,10 @@ import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
 import { UserFilters } from '../../../../domain/filterables';
-import { PrismaFilterAdapter } from '../../../../utils/adapters';
 import { MailerService } from '../../../../infra/mailer';
 import { TokenService } from '../token';
+import { GraphqlFilterService } from '@gabrieljsilva/nestjs-graphql-filter';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     private readonly prisma: PrismaService,
     private readonly mailerService: MailerService,
     private readonly tokenService: TokenService,
+    private readonly graphqlFilterService: GraphqlFilterService,
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -80,8 +82,8 @@ export class UserService {
       },
     });
 
-    const prismaQueryFilter = new PrismaFilterAdapter();
-    const findUsersFilters = filters && prismaQueryFilter.getQuery(filters);
+    const findUsersFilters =
+      this.graphqlFilterService.getQuery<Prisma.UserWhereInput>(filters);
 
     const users = await this.prisma.user.findMany({
       take: take,

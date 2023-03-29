@@ -82,7 +82,7 @@ input UploadFilterableEntity {
 }
 
 type Query {
-  getManyUsers(pagination: PaginationInput!, filters: UserFilters): UserPaginated!
+  getManyUsers(pagination: PaginationInput!, filters: UserFilters!): UserPaginated!
   getUserById(id: String!): User!
   getUploads(filters: UploadFilters!, pagination: PaginationInput!): UploadPaginated!
 }

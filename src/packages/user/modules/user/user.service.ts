@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '@prisma/module/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { AlreadyExistsException, NotFoundException } from '@exceptions';
 import { CREDENTIALS_STATUS, RESOURCE, TOKEN_TYPE } from '@enums';
+
 import { hashString } from '../../domain';
 import { PaginationInput } from '../../../../utils/graphql';
 import { calculatePaginationMetadata } from '../../../../utils/function';
 import { UserPaginated } from '../../../../domain/paginations';
-import { UserFilters } from '../../../../domain/filterables';
 import { MailerService } from '../../../../infra/mailer';
 import { TokenService } from '../token';
-import { GraphqlFilterService } from '@gabrieljsilva/nestjs-graphql-filter';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -19,7 +18,6 @@ export class UserService {
     private readonly prisma: PrismaService,
     private readonly mailerService: MailerService,
     private readonly tokenService: TokenService,
-    private readonly graphqlFilterService: GraphqlFilterService,
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -72,7 +70,7 @@ export class UserService {
 
   async getManyUsers(
     { skip, take }: PaginationInput,
-    filters?: UserFilters,
+    filters?: Prisma.UserWhereInput,
   ): Promise<UserPaginated> {
     const totalItemsCount = await this.prisma.user.count({
       where: {
@@ -82,16 +80,13 @@ export class UserService {
       },
     });
 
-    const findUsersFilters =
-      this.graphqlFilterService.getQuery<Prisma.UserWhereInput>(filters);
-
     const users = await this.prisma.user.findMany({
       take: take,
       skip: skip,
       where: {
         credentials: {
           status: CREDENTIALS_STATUS.ACTIVE,
-          AND: findUsersFilters,
+          user: filters,
         },
       },
     });

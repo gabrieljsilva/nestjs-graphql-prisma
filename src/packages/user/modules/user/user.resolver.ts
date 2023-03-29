@@ -11,9 +11,10 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from '@dtos';
 import { PaginationInput } from '../../../../utils/graphql';
 import { UserPaginated } from '../../../../domain/paginations';
-import { UserFilters } from '../../../../domain/filterables';
-import { IsPublic, RequirePermissions } from '@decorators';
+import { FilterArgs, IsPublic, RequirePermissions } from '@decorators';
 import { PERMISSIONS } from '@enums';
+import { Prisma } from '@prisma/client';
+import { UserFilters } from '../../../../domain/filterables';
 
 @Resolver(User)
 export class UserResolver {
@@ -41,7 +42,7 @@ export class UserResolver {
   @Query(() => UserPaginated)
   getManyUsers(
     @Args('pagination') paginationInput: PaginationInput,
-    @Args('filters', { nullable: true }) filter: UserFilters,
+    @FilterArgs('filters', UserFilters) filter: Prisma.UserWhereInput,
   ): Promise<UserPaginated> {
     return this.userService.getManyUsers(paginationInput, filter);
   }

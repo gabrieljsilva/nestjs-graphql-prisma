@@ -15,23 +15,23 @@ services:
     networks:
       - default
 
-  api_v1:
-    container_name: api_v1
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: "sh -c 'yarn && yarn start:dev'"
-    networks:
-      - default
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./:/source
-    env_file:
-      - .env
-    environment:
-      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}'
-    restart: always
+#  api_v1:
+#    container_name: api_v1
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    command: "sh -c 'yarn && yarn start:dev'"
+#    networks:
+#      - default
+#    ports:
+#      - '3000:3000'
+#    volumes:
+#      - ./:/source
+#    env_file:
+#      - .env
+#    environment:
+#      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}'
+#    restart: always
 
 networks:
   default:
